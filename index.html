@@ -12,54 +12,52 @@
             background-attachment: fixed;
             color: #ffffff;
             font-family: 'Segoe UI', sans-serif;
-            margin: 0; min-height: 100vh;
-            display: flex; flex-direction: column; align-items: center;
-            overflow: hidden;
+            margin: 0; min-height: 100vh; overflow: hidden;
         }
-
-        /* --- ПЛАНЕТИ (СОНЦЯ) --- */
+        /* Планети залишаються фоном */
         .planet { position: absolute; border-radius: 50%; z-index: 1; 
                   background: radial-gradient(circle at 30% 30%, #fff, #444);
-                  box-shadow: 0 0 40px rgba(255,255,255,0.2); }
+                  box-shadow: 0 0 40px rgba(255,255,255,0.2); pointer-events: none; }
         .p1 { width: 140px; height: 140px; top: 10%; right: 10%; }
         .p2 { width: 90px; height: 90px; bottom: 15%; left: 8%; }
         .p3 { width: 110px; height: 110px; top: 25%; left: 18%; }
 
-        /* --- КУЛЬКИ (КОСМІЧНІ ШАРИ) --- */
+        /* Кульки (рандомний рух) */
         .orb { position: absolute; width: 25px; height: 25px; background: #00f0ff; 
                border-radius: 50%; z-index: 0; filter: blur(3px);
-               animation: drift 25s infinite linear; }
-        @keyframes drift {
-            0% { transform: translate(-10vw, 100vh); }
-            100% { transform: translate(110vw, -10vh); }
-        }
+               transition: all 5s linear; pointer-events: none; }
 
-        /* --- КАРТКИ --- */
         .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
-                      gap: 20px; width: 90%; max-width: 1000px; margin-top: 50px; z-index: 2; }
+                      gap: 20px; width: 90%; max-width: 1000px; margin: 50px auto; z-index: 2; position: relative; }
         .card { background: rgba(10, 14, 23, 0.75); border: 1px solid rgba(255, 255, 255, 0.1); 
-                border-radius: 12px; padding: 25px; text-align: center; cursor: pointer;
-                transition: transform 0.3s, border-color 0.3s; }
-        .card:hover { transform: translateY(-10px); border-color: #00f0ff; }
-        h2 { font-size: 1.3rem; margin: 10px 0; }
-        p { font-size: 0.9rem; color: #bbc4d0; }
+                border-radius: 12px; padding: 25px; text-align: center; cursor: pointer; }
     </style>
 </head>
 <body>
-
     <div class="planet p1"></div><div class="planet p2"></div><div class="planet p3"></div>
-    
-    <div class="orb" style="animation-delay: 0s;"></div>
-    <div class="orb" style="animation-delay: 8s; background: #0088ff;"></div>
-    <div class="orb" style="animation-delay: 16s; background: #00ffff;"></div>
+    <div class="orb" id="o1"></div><div class="orb" id="o2"></div><div class="orb" id="o3"></div>
 
     <main class="cards-grid">
-        <div class="card" onclick="alert('Книги')"><h2>📚 Книги та Статті</h2><p>Мої літературні праці та публікації.</p></div>
-        <div class="card" onclick="alert('Медіа')"><h2>🎬 Медіатека</h2><p>Відео, музика та анімації.</p></div>
-        <div class="card" onclick="alert('Код')"><h2>💻 Софт & Код</h2><p>Мої програми та скрипти.</p></div>
-        <div class="card" onclick="alert('Світлини')"><h2>📸 Мої Світлини</h2><p>Цифрові картини та фото.</p></div>
-        <div class="card" onclick="alert('Цікаве')"><h2>✨ Цікаве для всіх!</h2><p>Корисна інформація для кожного.</p></div>
+        <div class="card"><h2>📚 Книги та Статті</h2></div>
+        <div class="card"><h2>🎬 Медіатека</h2></div>
+        <div class="card"><h2>💻 Софт & Код</h2></div>
+        <div class="card"><h2>📸 Мої Світлини</h2></div>
+        <div class="card"><h2>✨ Цікаве для всіх!</h2></div>
     </main>
 
+    <script>
+        function moveOrbs() {
+            const orbs = document.querySelectorAll('.orb');
+            orbs.forEach(orb => {
+                // Генеруємо випадкові координати, уникаючи центру (де картки)
+                let x = Math.random() * (window.innerWidth - 50);
+                let y = Math.random() * (window.innerHeight - 50);
+                orb.style.left = x + 'px';
+                orb.style.top = y + 'px';
+            });
+        }
+        setInterval(moveOrbs, 5000); // Рухаються кожні 5 секунд
+        moveOrbs();
+    </script>
 </body>
 </html>
