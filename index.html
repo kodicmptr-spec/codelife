@@ -1,64 +1,16 @@
-<!DOCTYPE html>
-<html lang="uk">
-<head>
-    <meta charset="UTF-8">
-    <title>Мій CodeLife!</title>
-    <style>
-        body {
-            background-color: #03060f;
-            background-image: url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?q=80&w=2070&auto=format&fit=crop');
-            background-size: cover;
-            background-attachment: fixed;
-            margin: 0; min-height: 100vh; overflow: hidden;
-            display: flex; flex-direction: column; align-items: center;
-        }
-
-        /* Планети (фон) */
-        .planet { position: absolute; border-radius: 50%; z-index: 1; 
-                  background: radial-gradient(circle at 30% 30%, #fff, #444);
-                  box-shadow: 0 0 40px rgba(255,255,255,0.2); pointer-events: none; }
-        .p1 { width: 140px; height: 140px; top: 10%; right: 10%; }
-        .p2 { width: 90px; height: 90px; bottom: 15%; left: 8%; }
-        .p3 { width: 110px; height: 110px; top: 25%; left: 18%; }
-
-        /* Сині кульки (рандомний рух) */
-        .orb { position: absolute; width: 25px; height: 25px; background: #00f0ff; 
-               border-radius: 50%; z-index: 0; filter: blur(3px);
-               transition: all 5s linear; pointer-events: none; }
-
-        /* Сітка кнопок */
+/* --- КАРТКИ З ЕФЕКТОМ СЯЙВА --- */
         .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
                       gap: 20px; width: 90%; max-width: 1000px; margin-top: 50px; 
                       z-index: 2; position: relative; }
         
         .card { background: rgba(10, 14, 23, 0.75); border: 1px solid rgba(255, 255, 255, 0.1); 
                 border-radius: 12px; padding: 25px; text-align: center; cursor: pointer;
-                transition: transform 0.3s; }
-        .card:hover { transform: translateY(-5px); border-color: #00f0ff; }
-        h2 { font-size: 1.1rem; margin: 10px 0; color: white; }
-    </style>
-</head>
-<body>
-    <div class="planet p1"></div><div class="planet p2"></div><div class="planet p3"></div>
-    <div class="orb" id="o1"></div><div class="orb" id="o2"></div><div class="orb" id="o3"></div>
-
-    <main class="cards-grid">
-        <div class="card" onclick="alert('Книги')"><h2>📚 Мої Книги та Статті</h2></div>
-        <div class="card" onclick="alert('Медіа')"><h2>🎬 Мої Медіафайли</h2></div>
-        <div class="card" onclick="alert('Код')"><h2>💻 Мої Софт & Коди</h2></div>
-        <div class="card" onclick="alert('Світлини')"><h2>📸 Мої Світлини</h2></div>
-        <div class="card" onclick="alert('Цікаве')"><h2>✨ Цікаве для всіх!</h2></div>
-    </main>
-
-    <script>
-        function moveOrbs() {
-            document.querySelectorAll('.orb').forEach(orb => {
-                orb.style.left = (Math.random() * 90) + 'vw';
-                orb.style.top = (Math.random() * 90) + 'vh';
-            });
+                transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s; }
+        
+        .card:hover { 
+            transform: translateY(-5px); 
+            border-color: #00f0ff; 
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4); 
         }
-        setInterval(moveOrbs, 4000);
-        moveOrbs();
-    </script>
-</body>
-</html>
+        
+        h2 { font-size: 1.1rem; margin: 10px 0; color: white; }
