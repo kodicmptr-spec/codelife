@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="uk">
 <head>
@@ -6,269 +5,100 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Мій CodeLife!</title>
     <style>
-        /* Базовий космічний фон */
         body {
-            background-color: #03060f; 
-            background-image: url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?q=80&w=2070&auto=format&fit=crop'); 
-            background-size: cover; 
-            background-position: center; 
-            background-attachment: fixed; 
-            background-repeat: no-repeat; 
-            
+            background-color: #03060f;
+            background-image: url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: #ffffff;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            padding: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
         }
 
-        /* --- КОСМІЧНА АНІМАЦІЯ ТА РУХ --- */
+        header { margin-top: 50px; text-align: center; }
 
-        /* Контейнер для нашої планетарної системи, що лежить під картками */
-        .universe-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none; /* Щоб мишки не заважало натискати на картки */
-            zoom: 2;
-            z-index: 1;
-        }
-
-        /* Головне Сонце (Центральне велике) */
-        .sun-main {
-            position: absolute;
-            top: 15%;
-            left: 50%;
-            width: 80px;
-            height: 80px;
-            background: radial-gradient(circle, #ffffff 30%, rgba(255,255,255,0.8) 60%, transparent 100%);
-            border-radius: 50%;
-            box-shadow: 0 0 60px 20px rgba(255, 255, 255, 0.4);
-            transform: translate(-50%, -50%);
-            animation: pulse 4s ease-in-out infinite alternate;
-        }
-
-        /* Друге Сонце (Ліворуч внизу) */
-        .sun-left {
-            position: absolute;
-            bottom: 20%;
-            left: 15%;
-            width: 50px;
-            height: 50px;
-            background: radial-gradient(circle, #ffffff 40%, rgba(255,255,255,0.6) 70%, transparent 100%);
-            border-radius: 50%;
-            box-shadow: 0 0 40px 15px rgba(255, 255, 255, 0.3);
-            animation: pulse 5s ease-in-out infinite alternate-reverse;
-        }
-
-        /* Третє Сонце (Праворуч вгорі) */
-        .sun-right {
-            position: absolute;
-            top: 30%;
-            right: 10%;
-            width: 40px;
-            height: 40px;
-            background: radial-gradient(circle, #ffffff 50%, rgba(255,255,255,0.5) 80%, transparent 100%);
-            border-radius: 50%;
-            box-shadow: 0 0 35px 10px rgba(255, 255, 255, 0.2);
-            animation: pulse 6s ease-in-out infinite alternate;
-        }
-
-        /* Орбіта та Планета 1 (кружляє навколо головного сонця) */
-        .orbit-one {
-            position: absolute;
-            top: 15%;
-            left: 50%;
-            width: 240px;
-            height: 240px;
-            border: 1px dashed rgba(255, 255, 255, 0.08);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            animation: rotate 25s linear infinite;
-        }
-        .planet-one {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            width: 14px;
-            height: 14px;
-            background: linear-gradient(45deg, #00f0ff, #0077ff);
-            border-radius: 50%;
-            box-shadow: 0 0 10px #00f0ff;
-        }
-
-        /* Орбіта та Планета 2 (велика неонова планета) */
-        .orbit-two {
-            position: absolute;
-            bottom: 20%;
-            left: 15%;
-            width: 160px;
-            height: 160px;
-            border: 1px dashed rgba(255, 255, 255, 0.05);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            animation: rotate 18s linear infinite reverse;
-        }
-        .planet-two {
-            position: absolute;
-            bottom: 0;
-            right: 50%;
-            width: 18px;
-            height: 18px;
-            background: linear-gradient(45deg, #00ffaa, #00aaff);
-            border-radius: 50%;
-            box-shadow: 0 0 12px #00ffaa;
-        }
-
-        /* Анімація пульсації сонць */
-        @keyframes pulse {
-            0% { transform: scale(0.98); opacity: 0.85; }
-            100% { transform: scale(1.02); opacity: 1; box-shadow: 0 0 70px 25px rgba(255, 255, 255, 0.5); }
-        }
-
-        /* Анімація обертання планет */
-        @keyframes rotate {
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-
-        /* --- ІНТЕРФЕЙС САЙТУ --- */
-
-        header {
-            text-align: center;
-            margin-top: 50px;
-            margin-bottom: 30px;
-            position: relative;
-            z-index: 5;
-        }
-
-        h1 {
-            font-size: 3rem;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            color: #00f0ff; 
-            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5), 0 0 20px rgba(0, 240, 255, 0.3);
-            margin: 0;
-        }
-
-        p.subtitle {
-            color: #8a99ad;
-            font-size: 1.1rem;
-            margin-top: 10px;
-        }
-
-        .grid-container {
+        .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
             width: 90%;
-            max-width: 1200px;
-            padding: 20px;
-            position: relative;
-            z-index: 5;
+            max-width: 1000px;
+            margin-top: 40px;
+            padding-bottom: 50px;
         }
 
         .card {
-            background: rgba(10, 14, 23, 0.75); 
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            padding: 30px;
+            background: rgba(10, 14, 23, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
             text-align: center;
-            backdrop-filter: blur(10px); 
-            transition: all 0.4s ease;
             cursor: pointer;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            transition: transform 0.3s, border-color 0.3s;
         }
 
-        .card:hover {
-            transform: translateY(-10px);
-            border-color: #00f0ff;
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
-            background: rgba(0, 240, 255, 0.02);
-        }
+        .card:hover { transform: translateY(-10px); border-color: #00f0ff; }
+        .card-icon { font-size: 2rem; margin-bottom: 10px; }
+        h2 { font-size: 1.2rem; margin: 10px 0; }
+        p { font-size: 0.9rem; color: #bbc4d0; }
 
-        .card h3 {
-            color: #00f0ff;
-            font-size: 1.5rem;
-            margin-top: 0;
-        }
-
-        .card p {
-            color: #bbc4d0;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-
-        footer {
-            margin-top: auto;
-            padding: 30px;
-            color: #4a5768;
-            font-size: 0.85rem;
-            position: relative;
-            z-index: 5;
-        }
+        footer { margin-top: auto; padding: 20px; opacity: 0.7; }
     </style>
 </head>
 <body>
 
-    <div class="universe-container">
-        <div class="sun-main"></div>
-        <div class="sun-left"></div>
-        <div class="sun-right"></div>
-        
-        <div class="orbit-one">
-            <div class="planet-one"></div>
-        </div>
-        <div class="orbit-two">
-            <div class="planet-two"></div>
-        </div>
-    </div>
-
     <header>
         <h1>МІЙ CODELIFE!</h1>
-        <p class="subtitle">Центральний вузол управління контентом та розробками</p>
     </header>
 
-    <div class="grid-container">
-        <div class="card">
-            <div class="card" onclick="openChoice('Книги та Статті')">
+    <main class="cards-grid">
+        <div class="card" onclick="openChoice('Книги та Статті')">
             <div class="card-icon">📚</div>
             <h2>Книги та Статті</h2>
-            <p>Мої літературні праці, аналітика та публікації, збережені в цифровій хмарі.</p>
+            <p>Мої літературні праці та публікації.</p>
         </div>
 
-        <div class="card" onclick="openChoice('Медіатека')" style="border-color: #00f0ff;">
+        <div class="card" onclick="openChoice('Медіатека')">
             <div class="card-icon">🎬</div>
             <h2>Медіатека</h2>
-            <p>Авторські відеокліпи, музичні треки та анімаційні мультфільми.</p>
+            <p>Відео, музика та анімації.</p>
         </div>
 
         <div class="card" onclick="openChoice('Софт & Код')">
             <div class="card-icon">💻</div>
             <h2>Софт & Код</h2>
-            <p>Програми та скрипти, написані мною на різних мовах програмування.</p>
+            <p>Мої програми та скрипти.</p>
         </div>
 
         <div class="card" onclick="openChoice('Мої Світлини')">
             <div class="card-icon">📸</div>
             <h2>Мої Світлини</h2>
-            <p>Мої цифрові світлини, концепт-арти та зображення високої якості.</p>
+            <p>Цифрові картини та фото.</p>
         </div>
 
         <div class="card" onclick="openInteresting()">
             <div class="card-icon">✨</div>
             <h2>Цікаве для всіх!</h2>
-            <p>Медіафайли, світлини та корисна інформація для кожного.</p>
+            <p>Медіа, світлини та інше.</p>
         </div>
+    </main>
+
     <footer>
         &copy; 2026 CodeLife. Запрограмовано для майбутнього.
     </footer>
 
+    <script>
+        function openChoice(name) {
+            alert("Ви обрали: " + name);
+        }
+        function openInteresting() {
+            alert("Ласкаво просимо до розділу 'Цікаве для всіх!'");
+        }
+    </script>
 </body>
 </html>
