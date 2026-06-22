@@ -22,7 +22,7 @@
         .p2 { width: 90px; height: 90px; bottom: 15%; left: 8%; }
         .p3 { width: 110px; height: 110px; top: 25%; left: 18%; }
 
-        /* Кульки */
+        /* Кульки (рандомний рух) */
         .orb { position: absolute; width: 25px; height: 25px; background: #00f0ff; 
                border-radius: 50%; z-index: 0; filter: blur(3px);
                transition: all 5s linear; pointer-events: none; }
@@ -43,6 +43,7 @@
         }
         
         h2 { font-size: 1.1rem; margin: 10px 0; color: white; }
+        p { font-size: 0.9rem; color: #bbc4d0; }
     </style>
 </head>
 <body>
@@ -50,11 +51,11 @@
     <div class="orb" id="o1"></div><div class="orb" id="o2"></div><div class="orb" id="o3"></div>
 
     <main class="cards-grid">
-        <div class="card" onclick="alert('Книги')"><h2>📚 Мої Книги та Статті</h2></div>
-        <div class="card" onclick="alert('Медіа')"><h2>🎬 Мої Медіафайли</h2></div>
-        <div class="card" onclick="alert('Код')"><h2>💻 Мої Софт & Коди</h2></div>
-        <div class="card" onclick="alert('Світлини')"><h2>📸 Мої Світлини</h2></div>
-        <div class="card" onclick="alert('Цікаве')"><h2>✨ Цікаве для всіх!</h2></div>
+        <div class="card" onclick="alert('Книги')"><h2>📚 Мої Книги та Статті</h2><p>Мої літературні праці.</p></div>
+        <div class="card" onclick="alert('Медіа')"><h2>🎬 Мої Медіафайли</h2><p>Відео, музика, анімації.</p></div>
+        <div class="card" onclick="alert('Код')"><h2>💻 Мої Софт & Коди</h2><p>Програми та скрипти.</p></div>
+        <div class="card" onclick="alert('Світлини')"><h2>📸 Мої Світлини</h2><p>Цифрові картини та фото.</p></div>
+        <div class="card" onclick="alert('Цікаве')"><h2>✨ Цікаве для всіх!</h2><p>Корисна інформація.</p></div>
     </main>
 
     <script>
