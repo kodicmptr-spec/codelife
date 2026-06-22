@@ -237,23 +237,36 @@
 
     <div class="grid-container">
         <div class="card">
-            <h3>📚 Книги та Статті</h3>
+            <div class="card" onclick="openChoice('Книги та Статті')">
+            <div class="card-icon">📚</div>
+            <h3>Книги та Статті</h3>
             <p>Мої літературні праці, аналітика та публікації, збережені в цифровій хмарі.</p>
         </div>
-        <div class="card" style="border-color: #00f0ff;">
-            <h3>🎬 Медіатека</h3>
+
+        <div class="card" onclick="openChoice('Медіатека')" style="border-color: #00f0ff;">
+            <div class="card-icon">🎬</div>
+            <h3>Медіатека</h3>
             <p>Авторські відеокліпи, музичні треки та анімаційні мультфільми.</p>
         </div>
-        <div class="card">
-            <h3>💻 Софт & Код</h3>
+
+        <div class="card" onclick="openChoice('Софт & Код')">
+            <div class="card-icon">💻</div>
+            <h3>Софт & Код</h3>
             <p>Програми та скрипти, написані мною на різних мовах програмування.</p>
         </div>
-        <div class="card">
-            <h3>📸 Галерея</h3>
+
+        <div class="card" onclick="openChoice('Мої Світлини')">
+            <div class="card-icon">📸</div>
+            <h3>Мої Світлини</h3>
             <p>Мої цифрові світлини, концепт-арти та зображення високої якості.</p>
         </div>
-    </div>
 
+        <div class="card" onclick="openInteresting()">
+            <div class="card-icon">✨</div>
+            <h3>Цікаве для всіх!</h3>
+            <p>Медіафайли, світлини та корисна інформація для кожного.</p>
+        </div>
+    </main>
     <footer>
         &copy; 2026 CodeLife. Запрограмовано для майбутнього.
     </footer>
