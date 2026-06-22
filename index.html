@@ -12,16 +12,29 @@
             background-position: center;
             background-attachment: fixed;
             color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             margin: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            overflow: hidden; /* Щоб кульки не робили смуги прокрутки */
         }
 
-        header { margin-top: 50px; text-align: center; }
+        /* --- КОСМІЧНА АНІМАЦІЯ --- */
+        .sun { position: absolute; border-radius: 50%; background: white; opacity: 0.3; filter: blur(40px); }
+        .sun1 { width: 150px; height: 150px; top: 10%; right: 10%; }
+        .sun2 { width: 100px; height: 100px; bottom: 15%; left: 10%; }
+        .sun3 { width: 120px; height: 120px; top: 20%; left: 20%; }
 
+        .orb { position: absolute; width: 20px; height: 20px; background: #00f0ff; border-radius: 50%; box-shadow: 0 0 15px #00f0ff; animation: move 10s infinite linear; }
+        @keyframes move {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(100vw, 50vh); }
+            100% { transform: translate(0, 0); }
+        }
+
+        header { margin-top: 50px; text-align: center; z-index: 2; }
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -29,7 +42,7 @@
             width: 90%;
             max-width: 1000px;
             margin-top: 40px;
-            padding-bottom: 50px;
+            z-index: 2;
         }
 
         .card {
@@ -45,12 +58,18 @@
         .card:hover { transform: translateY(-10px); border-color: #00f0ff; }
         .card-icon { font-size: 2rem; margin-bottom: 10px; }
         h2 { font-size: 1.2rem; margin: 10px 0; }
-        p { font-size: 0.9rem; color: #bbc4d0; }
-
-        footer { margin-top: auto; padding: 20px; opacity: 0.7; }
+        footer { margin-top: auto; padding: 20px; z-index: 2; opacity: 0.7; }
     </style>
 </head>
 <body>
+
+    <div class="sun sun1"></div>
+    <div class="sun sun2"></div>
+    <div class="sun sun3"></div>
+
+    <div class="orb" style="animation-delay: 0s;"></div>
+    <div class="orb" style="animation-delay: 3s; background: #0088ff;"></div>
+    <div class="orb" style="animation-delay: 6s; background: #00ffff;"></div>
 
     <header>
         <h1>МІЙ CODELIFE!</h1>
@@ -60,45 +79,30 @@
         <div class="card" onclick="openChoice('Книги та Статті')">
             <div class="card-icon">📚</div>
             <h2>Книги та Статті</h2>
-            <p>Мої літературні праці та публікації.</p>
         </div>
-
         <div class="card" onclick="openChoice('Медіатека')">
             <div class="card-icon">🎬</div>
             <h2>Медіатека</h2>
-            <p>Відео, музика та анімації.</p>
         </div>
-
         <div class="card" onclick="openChoice('Софт & Код')">
             <div class="card-icon">💻</div>
             <h2>Софт & Код</h2>
-            <p>Мої програми та скрипти.</p>
         </div>
-
         <div class="card" onclick="openChoice('Мої Світлини')">
             <div class="card-icon">📸</div>
             <h2>Мої Світлини</h2>
-            <p>Цифрові картини та фото.</p>
         </div>
-
         <div class="card" onclick="openInteresting()">
             <div class="card-icon">✨</div>
             <h2>Цікаве для всіх!</h2>
-            <p>Медіа, світлини та інше.</p>
         </div>
     </main>
 
-    <footer>
-        &copy; 2026 CodeLife. Запрограмовано для майбутнього.
-    </footer>
+    <footer>&copy; 2026 CodeLife.</footer>
 
     <script>
-        function openChoice(name) {
-            alert("Ви обрали: " + name);
-        }
-        function openInteresting() {
-            alert("Ласкаво просимо до розділу 'Цікаве для всіх!'");
-        }
+        function openChoice(name) { alert("Ви обрали: " + name); }
+        function openInteresting() { alert("Розділ 'Цікаве для всіх!'"); }
     </script>
 </body>
 </html>
