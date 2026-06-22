@@ -2,107 +2,54 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мій CodeLife!</title>
     <style>
         body {
             background-color: #03060f;
-            background-image: url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?q=80&w=2070&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: #ffffff;
-            font-family: 'Segoe UI', sans-serif;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            overflow: hidden; /* Щоб кульки не робили смуги прокрутки */
+            background-image: radial-gradient(circle at 20% 30%, #333, transparent), 
+                              radial-gradient(circle at 80% 70%, #222, transparent);
+            margin: 0; min-height: 100vh; overflow: hidden;
+            display: flex; flex-direction: column; align-items: center;
+            font-family: sans-serif; color: white;
         }
 
-        /* --- КОСМІЧНА АНІМАЦІЯ --- */
-        .sun { position: absolute; border-radius: 50%; background: white; opacity: 0.3; filter: blur(40px); }
-        .sun1 { width: 150px; height: 150px; top: 10%; right: 10%; }
-        .sun2 { width: 100px; height: 100px; bottom: 15%; left: 10%; }
-        .sun3 { width: 120px; height: 120px; top: 20%; left: 20%; }
+        /* Білі "Сонця" (Планети) */
+        .sun { position: absolute; border-radius: 50%; z-index: 1; 
+               background: radial-gradient(circle at 30% 30%, #fff, #666); 
+               box-shadow: 0 0 50px rgba(255,255,255,0.2); }
+        .s1 { width: 120px; height: 120px; top: 10%; right: 15%; }
+        .s2 { width: 80px; height: 80px; bottom: 10%; left: 10%; }
+        .s3 { width: 100px; height: 100px; top: 20%; left: 20%; }
 
-        .orb { position: absolute; width: 20px; height: 20px; background: #00f0ff; border-radius: 50%; box-shadow: 0 0 15px #00f0ff; animation: move 10s infinite linear; }
-        @keyframes move {
-            0% { transform: translate(0, 0); }
-            50% { transform: translate(100vw, 50vh); }
-            100% { transform: translate(0, 0); }
+        /* Кульки (Орбітальний рух) */
+        .orb { position: absolute; width: 15px; height: 15px; background: #00f0ff; 
+               border-radius: 50%; z-index: 0; filter: blur(2px);
+               animation: float 20s infinite ease-in-out; }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            33% { transform: translate(50vw, 30vh); }
+            66% { transform: translate(20vw, 60vh); }
         }
 
-        header { margin-top: 50px; text-align: center; z-index: 2; }
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            width: 90%;
-            max-width: 1000px;
-            margin-top: 40px;
-            z-index: 2;
-        }
-
-        .card {
-            background: rgba(10, 14, 23, 0.75);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: transform 0.3s, border-color 0.3s;
-        }
-
-        .card:hover { transform: translateY(-10px); border-color: #00f0ff; }
-        .card-icon { font-size: 2rem; margin-bottom: 10px; }
-        h2 { font-size: 1.2rem; margin: 10px 0; }
-        footer { margin-top: auto; padding: 20px; z-index: 2; opacity: 0.7; }
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; 
+                      z-index: 5; margin-top: 100px; width: 80%; }
+        .card { background: rgba(0,0,0,0.6); padding: 20px; border-radius: 15px; border: 1px solid #00f0ff; 
+                text-align: center; cursor: pointer; backdrop-filter: blur(5px); }
     </style>
 </head>
 <body>
 
-    <div class="sun sun1"></div>
-    <div class="sun sun2"></div>
-    <div class="sun sun3"></div>
-
-    <div class="orb" style="animation-delay: 0s;"></div>
-    <div class="orb" style="animation-delay: 3s; background: #0088ff;"></div>
-    <div class="orb" style="animation-delay: 6s; background: #00ffff;"></div>
-
-    <header>
-        <h1>МІЙ CODELIFE!</h1>
-    </header>
+    <div class="sun s1"></div><div class="sun s2"></div><div class="sun s3"></div>
+    <div class="orb" style="top: 10%; left: 10%;"></div>
+    <div class="orb" style="top: 50%; left: 80%; background: #0088ff;"></div>
+    <div class="orb" style="top: 80%; left: 30%; background: #00ffff;"></div>
 
     <main class="cards-grid">
-        <div class="card" onclick="openChoice('Книги та Статті')">
-            <div class="card-icon">📚</div>
-            <h2>Книги та Статті</h2>
-        </div>
-        <div class="card" onclick="openChoice('Медіатека')">
-            <div class="card-icon">🎬</div>
-            <h2>Медіатека</h2>
-        </div>
-        <div class="card" onclick="openChoice('Софт & Код')">
-            <div class="card-icon">💻</div>
-            <h2>Софт & Код</h2>
-        </div>
-        <div class="card" onclick="openChoice('Мої Світлини')">
-            <div class="card-icon">📸</div>
-            <h2>Мої Світлини</h2>
-        </div>
-        <div class="card" onclick="openInteresting()">
-            <div class="card-icon">✨</div>
-            <h2>Цікаве для всіх!</h2>
-        </div>
+        <div class="card" onclick="alert('Книги')"><h2>📚 Книги</h2></div>
+        <div class="card" onclick="alert('Медіа')"><h2>🎬 Медіа</h2></div>
+        <div class="card" onclick="alert('Код')"><h2>💻 Код</h2></div>
+        <div class="card" onclick="alert('Світлини')"><h2>📸 Світлини</h2></div>
+        <div class="card" onclick="alert('Цікаве')"><h2>✨ Цікаве</h2></div>
     </main>
-
-    <footer>&copy; 2026 CodeLife.</footer>
-
-    <script>
-        function openChoice(name) { alert("Ви обрали: " + name); }
-        function openInteresting() { alert("Розділ 'Цікаве для всіх!'"); }
-    </script>
 </body>
 </html>
