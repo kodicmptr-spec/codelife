@@ -4,51 +4,50 @@
     <meta charset="UTF-8">
     <title>Мій CodeLife!</title>
     <style>
-        body { background-color: #03060f; color: white; font-family: 'Segoe UI', sans-serif; 
-               margin: 0; min-height: 100vh; overflow-x: hidden;
-               display: flex; flex-direction: column; align-items: center; }
+        body {
+            background-color: #03060f;
+            background-image: url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-attachment: fixed;
+            margin: 0; min-height: 100vh; overflow-x: hidden;
+            display: flex; flex-direction: column; align-items: center;
+            font-family: 'Segoe UI', sans-serif;
+        }
 
-        /* Планети та анімація кульок */
+        /* Космічні об'єкти */
         .orb { position: absolute; width: 25px; height: 25px; background: #00f0ff; 
-               border-radius: 50%; z-index: 0; filter: blur(3px);
-               transition: all 5s linear; pointer-events: none; }
+               border-radius: 50%; z-index: 0; filter: blur(3px); transition: all 5s linear; pointer-events: none; }
 
-        /* Сітка карток */
         .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; 
                       width: 90%; max-width: 1000px; margin-top: 50px; z-index: 2; position: relative; }
         
-        .card { background: rgba(10, 14, 23, 0.75); border: 1px solid rgba(255, 255, 255, 0.1); 
+        .card { background: rgba(10, 14, 23, 0.75); border: 1px solid #00f0ff; 
                 border-radius: 12px; padding: 25px; text-align: center; cursor: pointer;
-                transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s; }
-        .card:hover { transform: translateY(-5px); border-color: #00f0ff; box-shadow: 0 0 20px rgba(0, 240, 255, 0.4); }
+                transition: transform 0.3s, box-shadow 0.3s; }
         
-        h2 { font-size: 1.1rem; margin: 0; color: white; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 0 20px rgba(0, 240, 255, 0.4); }
+        
+        h2 { color: white; font-size: 1.1rem; margin: 0; }
 
         /* Відео контейнер */
-        #video-container { margin-top: 30px; text-align: center; z-index: 2; }
-        video { width: 500px; border: 2px solid #00f0ff; border-radius: 10px; background: black; }
-        .del-btn { margin-top: 10px; padding: 10px 20px; background: #ff4444; border: none; 
-                   color: white; border-radius: 5px; cursor: pointer; }
+        #video-display { margin-top: 40px; z-index: 2; text-align: center; }
     </style>
 </head>
 <body>
-
     <div class="orb" id="o1"></div><div class="orb" id="o2"></div><div class="orb" id="o3"></div>
 
     <main class="cards-grid">
-        <div class="card"><h2>📚 Мої Книги та Статті</h2></div>
-        <div class="card"><h2>🎬 Мої Медіафайли</h2></div>
-        <div class="card"><h2>💻 Мої Софт & Коди</h2></div>
-        <div class="card"><h2>📸 Мої Світлини</h2></div>
-        <div class="card"><h2>✨ Цікаве для всіх!</h2></div>
-        <div class="card" onclick="document.getElementById('filePicker').click()"><h2>😂 Гумор!</h2></div>
+        <div class="card"><h2>📚 Книги</h2></div>
+        <div class="card"><h2>🎬 Медіатека</h2></div>
+        <div class="card"><h2>💻 Софт</h2></div>
+        <div class="card"><h2>📸 Світлини</h2></div>
+        <div class="card"><h2>✨ Цікаве</h2></div>
+        <div class="card" onclick="showHumor()"><h2>😂 Гумор!</h2></div>
     </main>
 
-    <input type="file" id="filePicker" accept="video/*" style="display:none" onchange="loadVideo(event)">
-    <div id="video-container"></div>
+    <div id="video-display"></div>
 
     <script>
-        // Анімація кульок
         function moveOrbs() {
             document.querySelectorAll('.orb').forEach(orb => {
                 orb.style.left = (Math.random() * 90) + 'vw';
@@ -58,19 +57,13 @@
         setInterval(moveOrbs, 4000);
         moveOrbs();
 
-        // Завантаження відео
-        function loadVideo(event) {
-            const file = event.target.files[0];
-            const url = URL.createObjectURL(file);
-            const container = document.getElementById('video-container');
-            container.innerHTML = `
-                <video controls src="${url}"></video><br>
-                <button class="del-btn" onclick="removeVideo()">Видалити відео</button>
+        function showHumor() {
+            document.getElementById('video-display').innerHTML = `
+                <div style="border: 2px solid #00f0ff; padding: 10px; background: rgba(0,0,0,0.5);">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/gT4P52_D3wE" frameborder="0" allowfullscreen></iframe>
+                    <br><button onclick="this.parentElement.remove()" style="margin-top:10px; cursor:pointer;">Видалити відео з екрана</button>
+                </div>
             `;
-        }
-
-        function removeVideo() {
-            document.getElementById('video-container').innerHTML = '';
         }
     </script>
 </body>
