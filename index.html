@@ -2,43 +2,54 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <title>Мій Робочий Стіл</title>
+    <title>Мій CodeLife - Професійний Робочий Стіл</title>
     <style>
-        body { background: #03060f; margin: 0; font-family: sans-serif; display: flex; flex-wrap: wrap; padding: 20px; }
+        /* ... твої стилі залишаються без змін, до них додаємо тільки стиль для вікна ... */
+        body { background-color: #03060f; background-image: url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?q=80&w=2070&auto=format&fit=crop'); background-size: cover; background-attachment: fixed; margin: 0; min-height: 100vh; overflow: hidden; display: flex; flex-direction: column; align-items: center; font-family: 'Segoe UI', sans-serif; }
         
-        /* Іконка файлу */
-        .file-icon { width: 100px; text-align: center; color: white; cursor: pointer; margin: 20px; }
-        .file-icon img { width: 80px; }
+        /* Стиль для нашого "Вікна" */
+        #modal { display: none; position: fixed; top: 10%; left: 10%; width: 80%; height: 80%; background: rgba(0, 0, 0, 0.9); border: 2px solid #00f0ff; border-radius: 15px; z-index: 10; padding: 20px; color: white; text-align: center; }
+        .close-btn { cursor: pointer; color: #ff4444; font-weight: bold; font-size: 20px; }
         
-        /* Вікно, що відкривається */
-        #window { display: none; position: fixed; top: 10%; left: 15%; width: 70%; height: 70%; 
-                  background: #1a1a2e; border: 2px solid #00f0ff; border-radius: 10px; padding: 20px; }
-        .close-btn { color: red; cursor: pointer; font-weight: bold; }
+        /* ... твій попередній CSS для орбів та карток ... */
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; width: 90%; max-width: 1000px; margin-top: 50px; z-index: 2; position: relative; }
+        .card { background: rgba(10, 14, 23, 0.75); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 25px; text-align: center; cursor: pointer; transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); border-color: #00f0ff; box-shadow: 0 0 20px rgba(0, 240, 255, 0.4); }
+        h2 { font-size: 1.1rem; margin: 10px 0; color: white; }
     </style>
 </head>
 <body>
-
-    <div class="file-icon" onclick="openFile('video')">
-        <img src="https://cdn-icons-png.flaticon.com/512/1048/1048325.png">
-        <p>Мій Фільм.mp4</p>
+    <div id="modal">
+        <span class="close-btn" onclick="closeModal()">[X] ЗАКРИТИ</span>
+        <div id="modal-content"></div>
     </div>
 
-    <div id="window">
-        <span class="close-btn" onclick="closeWindow()">[X] ЗАКРИТИ</span>
-        <div id="content"></div>
-    </div>
+    <main class="cards-grid" id="main-grid"></main>
 
     <script>
-        function openFile(type) {
-            document.getElementById('window').style.display = 'block';
-            if(type === 'video') {
-                document.getElementById('content').innerHTML = `
-                    <video width="100%" controls>
-                        <source src="ТВІЙ_ФАЙЛ.mp4" type="video/mp4">
-                    </video>`;
-            }
+        // БАЗА ДАНИХ ТВОЇХ ФАЙЛІВ
+        const myFiles = [
+            { title: "📚 Мої Книги", content: "Тут буде список книг..." },
+            { title: "🎬 Відео з гумором", content: '<iframe width="560" height="315" src="https://www.youtube.com/embed/gT4P52_D3wE"></iframe>' },
+            { title: "💻 Софт & Коди", content: "Мої GitHub посилання..." }
+        ];
+
+        // Рендеринг карток
+        const grid = document.getElementById('main-grid');
+        myFiles.forEach(file => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `<h2>${file.title}</h2>`;
+            card.onclick = () => openModal(file.content);
+            grid.appendChild(card);
+        });
+
+        function openModal(content) {
+            document.getElementById('modal').style.display = 'block';
+            document.getElementById('modal-content').innerHTML = content;
         }
-        function closeWindow() { document.getElementById('window').style.display = 'none'; }
+
+        function closeModal() { document.getElementById('modal').style.display = 'none'; }
     </script>
 </body>
 </html>
