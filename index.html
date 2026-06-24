@@ -4,63 +4,51 @@
     <meta charset="UTF-8">
     <title>Мій CodeLife!</title>
     <style>
-        body {
-            background-color: #03060f;
-            background-image: url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?q=80&w=2070&auto=format&fit=crop');
-            background-size: cover;
-            background-attachment: fixed;
-            margin: 0; min-height: 100vh;
-            display: flex; flex-direction: column; align-items: center;
-            font-family: 'Segoe UI', sans-serif;
-            overflow-x: hidden;
-        }
-
-        /* Контейнер для всіх кнопок */
-        .cards-grid { 
-            display: grid; 
-            grid-template-columns: repeat(3, 1fr); /* Робимо рівно 3 колонки */
-            gap: 20px; 
-            width: 90%; 
-            max-width: 1100px; 
-            margin-top: 50px; 
-            z-index: 2; 
-        }
+        body { background-color: #03060f; color: white; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; }
+        .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 90%; max-width: 1000px; margin-top: 50px; }
+        .card { background: rgba(10, 14, 23, 0.75); border: 1px solid #00f0ff; padding: 20px; text-align: center; cursor: pointer; border-radius: 12px; }
         
-        .card { 
-            background: rgba(10, 14, 23, 0.75); 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            border-radius: 12px; 
-            padding: 20px; 
-            text-align: center; 
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .card:hover { 
-            transform: translateY(-5px); 
-            border-color: #00f0ff; 
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4); 
-        }
-        
-        h2 { font-size: 1.1rem; margin: 10px 0; color: white; }
+        /* Секція для Відео */
+        #video-container { margin-top: 40px; text-align: center; }
+        video { width: 560px; border: 2px solid #00f0ff; background: black; }
+        .controls { margin-top: 10px; }
+        button { padding: 10px 20px; cursor: pointer; background: #0088ff; border: none; color: white; border-radius: 5px; }
+        button.del { background: #ff4444; }
     </style>
 </head>
 <body>
 
     <main class="cards-grid">
-        <div class="card"><h2>📚 Мої Книги та Статті</h2></div>
-        <div class="card"><h2>🎬 Мої Медіафайли</h2></div>
-        <div class="card"><h2>💻 Мої Софт & Коди</h2></div>
-        <div class="card"><h2>📸 Мої Світлини</h2></div>
-        <div class="card"><h2>✨ Цікаве для всіх!</h2></div>
-        <div class="card" onclick="openHumor()"><h2>😂 Гумор!</h2></div>
+        <div class="card"><h2>📚 Книги</h2></div>
+        <div class="card"><h2>🎬 Медіатека</h2></div>
+        <div class="card"><h2>💻 Софт</h2></div>
+        <div class="card"><h2>📸 Світлини</h2></div>
+        <div class="card"><h2>✨ Цікаве</h2></div>
+        <div class="card" onclick="document.getElementById('filePicker').click()">
+            <h2>😂 Гумор!</h2>
+        </div>
     </main>
 
+    <input type="file" id="filePicker" accept="video/*" style="display:none" onchange="loadVideo(event)">
+
+    <div id="video-container"></div>
+
     <script>
-        function openHumor() {
-            // Щоб YouTube відео відкривалося коректно, використовуйте формат /embed/
-            // Замініть 'gT4P52_D3wE' на ID вашого відео
-            window.open("https://www.youtube.com/embed/gT4P52_D3wE", "_blank");
+        function loadVideo(event) {
+            const file = event.target.files[0];
+            const url = URL.createObjectURL(file);
+            const container = document.getElementById('video-container');
+            
+            container.innerHTML = `
+                <video controls autoplay src="${url}"></video>
+                <div class="controls">
+                    <button class="del" onclick="removeVideo()">Видалити з сайту</button>
+                </div>
+            `;
+        }
+
+        function removeVideo() {
+            document.getElementById('video-container').innerHTML = '';
         }
     </script>
 </body>
