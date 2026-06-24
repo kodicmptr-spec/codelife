@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Мій CodeLife!</title>
     <style>
-        /* ... твої стилі залишаються без змін ... */
         body {
             background-color: #03060f;
             background-image: url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?q=80&w=2070&auto=format&fit=crop');
@@ -26,22 +25,18 @@
                border-radius: 50%; z-index: 0; filter: blur(3px);
                transition: all 5s linear; pointer-events: none; }
 
-        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
-                      gap: 20px; width: 90%; max-width: 1200px; margin-top: 50px; 
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+                      gap: 15px; width: 95%; max-width: 1200px; margin-top: 50px; 
                       z-index: 2; position: relative; }
         
         .card { background: rgba(10, 14, 23, 0.75); border: 1px solid rgba(255, 255, 255, 0.1); 
-                border-radius: 12px; padding: 25px; text-align: center; cursor: pointer;
+                border-radius: 12px; padding: 20px; text-align: center; cursor: pointer;
                 transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s; }
         
-        .card:hover { 
-            transform: translateY(-5px); 
-            border-color: #00f0ff; 
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4); 
-        }
+        .card:hover { transform: translateY(-5px); border-color: #00f0ff; 
+                      box-shadow: 0 0 20px rgba(0, 240, 255, 0.4); }
         
         h2 { font-size: 1.1rem; margin: 10px 0; color: white; }
-        p { font-size: 0.9rem; color: #bbc4d0; }
     </style>
 </head>
 <body>
@@ -49,22 +44,19 @@
     <div class="orb" id="o1"></div><div class="orb" id="o2"></div><div class="orb" id="o3"></div>
 
     <main class="cards-grid">
-        <div class="card" onclick="alert('Книги')"><h2>📚 Мої Книги та Статті</h2></div>
-        <div class="card" onclick="alert('Медіа')"><h2>🎬 Мої Медіафайли</h2></div>
-        <div class="card" onclick="alert('Код')"><h2>💻 Мої Софт & Коди</h2></div>
-        <div class="card" onclick="alert('Світлини')"><h2>📸 Мої Світлини</h2></div>
-        <div class="card" onclick="alert('Цікаве')"><h2>✨ Цікаве для всіх!</h2></div>
-        
+        <div class="card"><h2>📚 Мої Книги та Статті</h2></div>
+        <div class="card"><h2>🎬 Мої Медіафайли</h2></div>
+        <div class="card"><h2>💻 Мої Софт & Коди</h2></div>
+        <div class="card"><h2>📸 Мої Світлини</h2></div>
+        <div class="card"><h2>✨ Цікаве для всіх!</h2></div>
         <div class="card" onclick="openHumor()"><h2>😂 Гумор!</h2><p>Чудового всім настрою!</p></div>
     </main>
 
     <script>
         function openHumor() {
-            // Ось тут ти зможеш вставити своє посилання на відео
-            const videoUrl = "https://www.youtube.com/embed/твій_код_відео"; 
-            window.open(videoUrl, '_blank');
+            // Встав сюди посилання на відео
+            window.open("https://www.youtube.com/embed/dQw4w9WgXcQ", "_blank");
         }
-
         function moveOrbs() {
             document.querySelectorAll('.orb').forEach(orb => {
                 orb.style.left = (Math.random() * 90) + 'vw';
