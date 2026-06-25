@@ -2,54 +2,38 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <title>Мій CodeLife - Професійний Робочий Стіл</title>
+    <title>Мій CodeLife!</title>
     <style>
-        /* ... твої стилі залишаються без змін, до них додаємо тільки стиль для вікна ... */
-        body { background-color: #03060f; background-image: url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?q=80&w=2070&auto=format&fit=crop'); background-size: cover; background-attachment: fixed; margin: 0; min-height: 100vh; overflow: hidden; display: flex; flex-direction: column; align-items: center; font-family: 'Segoe UI', sans-serif; }
+        /* Твій космічний дизайн залишається незмінним */
+        body { background-color: #03060f; background-image: url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?q=80&w=2070&auto=format&fit=crop'); background-size: cover; background-attachment: fixed; margin: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; font-family: 'Segoe UI', sans-serif; }
         
-        /* Стиль для нашого "Вікна" */
-        #modal { display: none; position: fixed; top: 10%; left: 10%; width: 80%; height: 80%; background: rgba(0, 0, 0, 0.9); border: 2px solid #00f0ff; border-radius: 15px; z-index: 10; padding: 20px; color: white; text-align: center; }
-        .close-btn { cursor: pointer; color: #ff4444; font-weight: bold; font-size: 20px; }
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; width: 90%; max-width: 1000px; margin-top: 50px; }
         
-        /* ... твій попередній CSS для орбів та карток ... */
-        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; width: 90%; max-width: 1000px; margin-top: 50px; z-index: 2; position: relative; }
-        .card { background: rgba(10, 14, 23, 0.75); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 25px; text-align: center; cursor: pointer; transition: 0.3s; }
+        .card { background: rgba(10, 14, 23, 0.75); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 25px; text-align: center; cursor: pointer; transition: 0.3s; color: white; }
         .card:hover { transform: translateY(-5px); border-color: #00f0ff; box-shadow: 0 0 20px rgba(0, 240, 255, 0.4); }
-        h2 { font-size: 1.1rem; margin: 10px 0; color: white; }
     </style>
 </head>
 <body>
-    <div id="modal">
-        <span class="close-btn" onclick="closeModal()">[X] ЗАКРИТИ</span>
-        <div id="modal-content"></div>
-    </div>
 
     <main class="cards-grid" id="main-grid"></main>
 
     <script>
-        // БАЗА ДАНИХ ТВОЇХ ФАЙЛІВ
+        // Твоя "База даних" — тут ти просто міняєш посилання
         const myFiles = [
-            { title: "📚 Мої Книги", content: "Тут буде список книг..." },
-            { title: "🎬 Відео з гумором", content: '<iframe width="560" height="315" src="https://www.youtube.com/embed/gT4P52_D3wE"></iframe>' },
-            { title: "💻 Софт & Коди", content: "Мої GitHub посилання..." }
+            { title: "🎬 Мій фільм", link: "ТУТ_ПОСИЛАННЯ_НА_GOOGLE_ДИСК" },
+            { title: "💻 Моя програма", link: "ТУТ_ПОСИЛАННЯ_НА_GOOGLE_ДИСК" },
+            { title: "📸 Світлина", link: "ТУТ_ПОСИЛАННЯ_НА_GOOGLE_ДИСК" }
         ];
 
-        // Рендеринг карток
         const grid = document.getElementById('main-grid');
         myFiles.forEach(file => {
             const card = document.createElement('div');
             card.className = 'card';
-            card.innerHTML = `<h2>${file.title}</h2>`;
-            card.onclick = () => openModal(file.content);
+            card.innerHTML = `<h2>${file.title}</h2><p>Натисни для перегляду</p>`;
+            // Відкриваємо файл у новому вікні
+            card.onclick = () => window.open(file.link, '_blank');
             grid.appendChild(card);
         });
-
-        function openModal(content) {
-            document.getElementById('modal').style.display = 'block';
-            document.getElementById('modal-content').innerHTML = content;
-        }
-
-        function closeModal() { document.getElementById('modal').style.display = 'none'; }
     </script>
 </body>
 </html>
