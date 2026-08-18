@@ -2,38 +2,121 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <title>Мій CodeLife!</title>
+    <title>Мій CodeLife - Професійний Робочий Стіл</title>
     <style>
-        /* Твій космічний дизайн залишається незмінним */
-        body { background-color: #03060f; background-image: url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?q=80&w=2070&auto=format&fit=crop'); background-size: cover; background-attachment: fixed; margin: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; font-family: 'Segoe UI', sans-serif; }
+        body {
+            background-color: #03060f;
+            background-image: url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-attachment: fixed;
+            margin: 0; min-height: 100vh; overflow: hidden;
+            display: flex; flex-direction: column; align-items: center;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        /* Планети фону */
+        .planet { position: absolute; border-radius: 50%; z-index: 1; 
+                  background: radial-gradient(circle at 30% 30%, #fff, #444);
+                  box-shadow: 0 0 40px rgba(255,255,255,0.2); pointer-events: none; }
+        .p1 { width: 140px; height: 140px; top: 10%; right: 10%; }
+        .p2 { width: 90px; height: 90px; bottom: 15%; left: 8%; }
+        .p3 { width: 110px; height: 110px; top: 25%; left: 18%; }
+
+        /* Кульки (рандомний рух) */
+        .orb { position: absolute; width: 25px; height: 25px; background: #00f0ff; 
+               border-radius: 50%; z-index: 0; filter: blur(3px);
+               transition: all 5s linear; pointer-events: none; }
+
+        /* Сітка файлів на робочому столі */
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+                      gap: 20px; width: 90%; max-width: 1000px; margin-top: 50px; 
+                      z-index: 2; position: relative; }
         
-        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; width: 90%; max-width: 1000px; margin-top: 50px; }
+        .card { background: rgba(10, 14, 23, 0.75); border: 1px solid rgba(255, 255, 255, 0.1); 
+                border-radius: 12px; padding: 25px; text-align: center; cursor: pointer;
+                transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s; }
         
-        .card { background: rgba(10, 14, 23, 0.75); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 25px; text-align: center; cursor: pointer; transition: 0.3s; color: white; }
-        .card:hover { transform: translateY(-5px); border-color: #00f0ff; box-shadow: 0 0 20px rgba(0, 240, 255, 0.4); }
+        .card:hover { 
+            transform: translateY(-5px); 
+            border-color: #00f0ff; 
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4); 
+        }
+        
+        h2 { font-size: 1.1rem; margin: 10px 0; color: white; }
+        p { font-size: 0.9rem; color: #bbc4d0; }
+
+        /* Віконна система (Модальне вікно) */
+        #modal-window { 
+            display: none; position: fixed; top: 15%; left: 20%; width: 60%; height: 60%; 
+            background: rgba(10, 14, 23, 0.95); border: 2px solid #00f0ff; border-radius: 15px; 
+            z-index: 10; padding: 30px; color: white; text-align: center; box-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
+        }
+        .close-btn { position: absolute; top: 15px; right: 20px; cursor: pointer; color: #ff4444; font-weight: bold; font-size: 18px; }
+        .action-btn { display: inline-block; margin-top: 20px; padding: 12px 25px; background: #0088ff; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; transition: 0.3s; }
+        .action-btn:hover { background: #00f0ff; color: #03060f; box-shadow: 0 0 15px #00f0ff; }
     </style>
 </head>
 <body>
+    <div class="planet p1"></div><div class="planet p2"></div><div class="planet p3"></div>
+    <div class="orb" id="o1"></div><div class="orb" id="o2"></div><div class="orb" id="o3"></div>
 
-    <main class="cards-grid" id="main-grid"></main>
+    <!-- Модальне вікно для відкриття файлів -->
+    <div id="modal-window">
+        <span class="close-btn" onclick="closeModal()">[X] ЗАКРИТИ</span>
+        <h2 id="modal-title" style="font-size: 1.5rem; margin-top: 20px;">Назва файлу</h2>
+        <p id="modal-desc" style="margin: 15px 0;">Опис файлу або інструкція для друга.</p>
+        <a id="modal-link" href="#" target="_blank" class="action-btn">📥 Відкрити / Завантажити файл</a>
+    </div>
+
+    <!-- Робочий стіл з іконками -->
+    <main class="cards-grid">
+        <div class="card" onclick="openFile('📚 Книги та Статті', 'Збірник моїх літературних праць та статей.', 'https://drive.google.com/')">
+            <h2>📚 Мої Книги</h2>
+            <p>Документи та матеріали.</p>
+        </div>
+
+        <div class="card" onclick="openFile('🎬 Медіафайли та Відео', 'Відеоролики та огляди мого софту.', 'https://www.youtube.com/')">
+            <h2>🎬 Медіафайли</h2>
+            <p>Відео та демонстрації.</p>
+        </div>
+
+        <div class="card" onclick="openFile('💻 Софт & Програми (.exe)', 'Інсталяційні файли моїх програм для завантаження.', 'https://drive.google.com/')">
+            <h2>💻 Мої Софт & Коди</h2><p>Програми та скрипти.</p>
+        </div>
+
+        <div class="card" onclick="openFile('📸 Світлини та Арти', 'Галерея цифрові картини та фото.', 'https://photos.google.com/')">
+            <h2>📸 Мої Світлини</h2>
+            <p>Цифрові галереї.</p>
+        </div>
+
+        <div class="card" onclick="openFile('✨ Цікаве для всіх!', 'Корисні інструменти та посилання.', 'https://github.com/')">
+            <h2>✨ Цікаве для всіх!</h2>
+            <p>Добірки та ідеї.</p>
+        </div>
+    </main>
 
     <script>
-        // Твоя "База даних" — тут ти просто міняєш посилання
-        const myFiles = [
-            { title: "🎬 Мій фільм", link: "https://drive.google.com/drive/folders/1O0_hzJCyPNXwRXYdCn-AtHQouKz8MHej?usp=drive_link" },
-            { title: "💻 Моя програма", link: "https://drive.google.com/drive/folders/1O0_hzJCyPNXwRXYdCn-AtHQouKz8MHej?usp=drive_link" },
-            { title: "📸 Світлина", link: "https://drive.google.com/drive/folders/1O0_hzJCyPNXwRXYdCn-AtHQouKz8MHej?usp=drive_link" }
-        ];
+        // Анімація кульок
+        function moveOrbs() {
+            document.querySelectorAll('.orb').forEach(orb => {
+                orb.style.left = (Math.random() * 90) + 'vw';
+                orb.style.top = (Math.random() * 90) + 'vh';
+            });
+        }
+        setInterval(moveOrbs, 4000);
+        moveOrbs();
 
-        const grid = document.getElementById('main-grid');
-        myFiles.forEach(file => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.innerHTML = `<h2>${file.title}</h2><p>Натисни для перегляду</p>`;
-            // Відкриваємо файл у новому вікні
-            card.onclick = () => window.open(file.link, '_blank');
-            grid.appendChild(card);
-        });
+        // Логіка відкриття вікна файлу
+        function openFile(title, desc, link) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-desc').innerText = desc;
+            document.getElementById('modal-link').href = link;
+            document.getElementById('modal-window').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('modal-window').style.display = 'none';
+        }
     </script>
 </body>
 </html>
