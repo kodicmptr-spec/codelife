@@ -64,20 +64,18 @@
             modal.style.display = 'block';
             document.getElementById('modal-content').innerHTML = `
                 <h3>🔒 Введіть пароль</h3>
-                <input type="password" id="passInput" placeholder="Пароль">
+                <input type="password" id="passInput" placeholder="Пароль" autofocus>
                 <br><button class="submit-btn" onclick="check('${category}')">Увійти</button>
                 <p id="error" style="color:red; margin-top:10px;"></p>
             `;
             
-            // Додаємо затримку 100мс, щоб браузер гарантовано встиг показати вікно перед фокусом
-            setTimeout(() => {
-                const inputField = document.getElementById('passInput');
-                inputField.focus();
-                
-                inputField.onkeydown = function(e) {
-                    if(e.key === 'Enter') check(category);
-                };
-            }, 100);
+            // Дублюємо фокус та обробку клавіші Enter
+            const inputField = document.getElementById('passInput');
+            inputField.focus();
+            
+            inputField.onkeydown = function(e) {
+                if(e.key === 'Enter') check(category);
+            };
         }
             
             // АВТОФОКУС: курсор одразу стає в поле введення пароля!
