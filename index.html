@@ -14,183 +14,78 @@
             font-family: 'Segoe UI', sans-serif;
         }
 
-        /* Планети фону */
-        .planet { position: absolute; border-radius: 50%; z-index: 1; 
-                  background: radial-gradient(circle at 30% 30%, #fff, #444);
-                  box-shadow: 0 0 40px rgba(255,255,255,0.2); pointer-events: none; }
+        .planet { position: absolute; border-radius: 50%; z-index: 1; background: radial-gradient(circle at 30% 30%, #fff, #444); box-shadow: 0 0 40px rgba(255,255,255,0.2); pointer-events: none; }
         .p1 { width: 140px; height: 140px; top: 10%; right: 10%; }
         .p2 { width: 90px; height: 90px; bottom: 15%; left: 8%; }
         .p3 { width: 110px; height: 110px; top: 25%; left: 18%; }
-
-        /* Кульки (рандомний рух) */
-        .orb { position: absolute; width: 25px; height: 25px; background: #00f0ff; 
-               border-radius: 50%; z-index: 0; filter: blur(3px);
-               transition: all 5s linear; pointer-events: none; }
-
-        /* Сітка карток */
-        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
-                      gap: 20px; width: 90%; max-width: 1000px; margin-top: 50px; 
-                      z-index: 2; position: relative; }
-        
-        .card { background: rgba(10, 14, 23, 0.75); border: 1px solid rgba(255, 255, 255, 0.1); 
-                border-radius: 12px; padding: 25px; text-align: center; cursor: pointer;
-                transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s; }
-        
-        .card:hover { 
-            transform: translateY(-5px); 
-            border-color: #00f0ff; 
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4); 
-        }
-        
+        .orb { position: absolute; width: 25px; height: 25px; background: #00f0ff; border-radius: 50%; z-index: 0; filter: blur(3px); transition: all 5s linear; pointer-events: none; }
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; width: 90%; max-width: 1000px; margin-top: 50px; z-index: 2; position: relative; }
+        .card { background: rgba(10, 14, 23, 0.75); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 25px; text-align: center; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s; }
+        .card:hover { transform: translateY(-5px); border-color: #00f0ff; box-shadow: 0 0 20px rgba(0, 240, 255, 0.4); }
         h2 { font-size: 1.1rem; margin: 10px 0; color: white; }
         p { font-size: 0.9rem; color: #bbc4d0; }
 
-        /* Модальне вікно */
-        #modal-window { 
-            display: none; position: fixed; top: 15%; left: 20%; width: 60%; height: 65%; 
-            background: rgba(10, 14, 23, 0.98); border: 2px solid #00f0ff; border-radius: 15px; 
-            z-index: 10; padding: 30px; color: white; text-align: center; box-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
-            overflow-y: auto;
-        }
-        .close-btn { position: absolute; top: 15px; right: 20px; cursor: pointer; color: #ff4444; font-weight: bold; font-size: 18px; }
-        
-        /* Поля вводу та кнопки */
-        .password-box { margin-top: 30px; }
-        input[type="password"] { padding: 10px; width: 220px; border-radius: 5px; border: 1px solid #00f0ff; background: #03060f; color: white; text-align: center; font-size: 1rem; }
-        .submit-btn { display: inline-block; margin-top: 15px; padding: 10px 20px; background: #0088ff; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; border: none; cursor: pointer; transition: 0.3s; }
-        .submit-btn:hover { background: #00f0ff; color: #03060f; box-shadow: 0 0 15px #00f0ff; }
-        
-        .file-list { margin-top: 20px; text-align: left; display: inline-block; width: 85%; }
-        .file-item { margin: 10px 0; background: rgba(0, 240, 255, 0.1); padding: 15px 20px; border-radius: 8px; border: 1px solid rgba(0, 240, 255, 0.3); text-align: center; }
-        .file-item a { color: #00f0ff; text-decoration: none; font-weight: bold; font-size: 1.1rem; }
-        .file-item a:hover { text-decoration: underline; text-shadow: 0 0 10px #00f0ff; }
+        #modal-window { display: none; position: fixed; top: 30%; left: 30%; width: 40%; background: rgba(10, 14, 23, 0.98); border: 2px solid #00f0ff; border-radius: 15px; z-index: 10; padding: 30px; color: white; text-align: center; box-shadow: 0 0 30px rgba(0, 240, 255, 0.5); }
+        .close-btn { position: absolute; top: 10px; right: 15px; cursor: pointer; color: #ff4444; font-weight: bold; }
+        input[type="password"] { padding: 10px; width: 200px; border-radius: 5px; border: 1px solid #00f0ff; background: #03060f; color: white; text-align: center; }
+        .submit-btn { margin-top: 15px; padding: 10px 20px; background: #0088ff; color: white; border-radius: 8px; border: none; cursor: pointer; }
     </style>
 </head>
 <body>
     <div class="planet p1"></div><div class="planet p2"></div><div class="planet p3"></div>
     <div class="orb" id="o1"></div><div class="orb" id="o2"></div><div class="orb" id="o3"></div>
 
-    <!-- Модальне вікно -->
     <div id="modal-window">
-        <span class="close-btn" onclick="closeModal()">[X] ЗАКРИТИ</span>
+        <span class="close-btn" onclick="document.getElementById('modal-window').style.display='none'">[X]</span>
         <div id="modal-content"></div>
     </div>
 
-    <!-- Кнопки головного меню -->
     <main class="cards-grid">
-        <div class="card" onclick="requestPassword('books')">
-            <h2>📚 Мої Книги</h2>
-            <p>PDF, DOCX, TXT (З паролем)</p>
-        </div>
-
-        <div class="card" onclick="requestPassword('media')">
-            <h2>🎬 Медіафайли</h2>
-            <p>MP4, MP3 (З паролем)</p>
-        </div>
-
-        <div class="card" onclick="requestPassword('software')">
-            <h2>💻 Мої Софт & Коди</h2>
-            <p>EXE, ASM, C, C++, JS, PY та ін. (З паролем)</p>
-        </div>
-
-        <div class="card" onclick="requestPassword('photos')">
-            <h2>📸 Мої Світлини</h2>
-            <p>Тільки фото та картинки (З паролем)</p>
-        </div>
-
-        <div class="card" onclick="openPublic()">
-            <h2>✨ Цікаве для всіх!</h2>
-            <p>Вільний вхід (Без пароля)</p>
-        </div>
+        <div class="card" onclick="requestPassword('books')"><h2>📚 Мої Книги</h2><p>PDF, DOCX, TXT</p></div>
+        <div class="card" onclick="requestPassword('media')"><h2>🎬 Медіафайли</h2><p>MP4, MP3</p></div>
+        <div class="card" onclick="requestPassword('software')"><h2>💻 Мої Софт & Коди</h2><p>EXE, ASM, PY</p></div>
+        <div class="card" onclick="requestPassword('photos')"><h2>📸 Мої Світлини</h2><p>JPG, PNG</p></div>
+        <div class="card" onclick="openPublic()"><h2>✨ Цікаве для всіх!</h2><p>Вільний вхід</p></div>
     </main>
 
     <script>
-        // Твій персональний секретний пароль
         const SECRET_PASSWORD = "11111968";
-
-        // ПОСИЛАННЯ НА ТВОЇ ПАПКИ З GOOGLE ДИСКА
         const database = {
-            books: { name: "📁 Відкрити папку 'Мої книги!'", link: "https://drive.google.com/drive/folders/1CfXdTjx0Ib7ST21TBDy1Hg2-QdcvzFMO?usp=drive_link" },
-            media: { name: "📁 Відкрити папку 'Медіафайли!'", link: "https://drive.google.com/drive/folders/15HgC3XhSLDvjo2pQLROdoFJLj0tpfcGb?usp=drive_link" },
-            software: { name: "📁 Відкрити папку 'Мої софт & коди!'", link: "https://drive.google.com/drive/folders/18lHjjyJfPgzTG5XYSVPAyKmAlX-RU5Ii?usp=drive_link" },
-            photos: { name: "📁 Відкрити папку 'Мої світлини!'", link: "https://drive.google.com/drive/folders/10fMK4fULL_EBsKMxKajMf29YheouXoKh?usp=drive_link" },
-            public: { name: "✨ Відкрити папку 'Цікаве для всіх!'", link: "https://drive.google.com/drive/folders/1LPZOGhXmUkf0KjLIBKTXm_TwQxKgDGuv?usp=drive_link" }
+            books: "https://drive.google.com/drive/folders/1CfXdTjx0Ib7ST21TBDy1Hg2-QdcvzFMO?usp=drive_link",
+            media: "https://drive.google.com/drive/folders/15HgC3XhSLDvjo2pQLROdoFJLj0tpfcGb?usp=drive_link",
+            software: "https://drive.google.com/drive/folders/18lHjjyJfPgzTG5XYSVPAyKmAlX-RU5Ii?usp=drive_link",
+            photos: "https://drive.google.com/drive/folders/10fMK4fULL_EBsKMxKajMf29YheouXoKh?usp=drive_link",
+            public: "https://drive.google.com/drive/folders/1LPZOGhXmUkf0KjLIBKTXm_TwQxKgDGuv?usp=drive_link"
         };
 
-        // Анімація фонових кульок
-        function moveOrbs() {
-            document.querySelectorAll('.orb').forEach(orb => {
-                orb.style.left = (Math.random() * 90) + 'vw';
-                orb.style.top = (Math.random() * 90) + 'vh';
-            });
-        }
-        setInterval(moveOrbs, 4000);
-        moveOrbs();
-
-        // Запит пароля для 4 захищених кнопок
         function requestPassword(category) {
-            const modal = document.getElementById('modal-window');
-            const content = document.getElementById('modal-content');
-            
-            modal.style.display = 'block';
-            content.innerHTML = `
-                <h2 style="margin-top:20px; color:#00f0ff;">🔒 Захищений розділ</h2>
-                <p>Введіть персональний пароль:</p>
-                <div class="password-box">
-                    <input type="password" id="passInput" placeholder="Пароль">
-                    <br>
-                    <button class="submit-btn" onclick="checkPassword('${category}')">Увійти</button>
-                </div>
-                <p id="errorMsg" style="color:#ff4444; margin-top:15px; font-weight:bold;"></p>
+            document.getElementById('modal-window').style.display = 'block';
+            document.getElementById('modal-content').innerHTML = `
+                <h3>🔒 Введіть пароль</h3>
+                <input type="password" id="passInput" onkeypress="if(event.key==='Enter') check('${category}')">
+                <br><button class="submit-btn" onclick="check('${category}')">Увійти</button>
+                <p id="error" style="color:red;"></p>
             `;
         }
 
-        function checkPassword(category) {
-            const enteredPass = document.getElementById('passInput').value;
-            if (enteredPass === SECRET_PASSWORD) {
-                showFolder(category);
+        function check(category) {
+            if(document.getElementById('passInput').value === SECRET_PASSWORD) {
+                window.open(database[category], '_blank');
+                document.getElementById('modal-window').style.display = 'none';
             } else {
-                document.getElementById('errorMsg').innerText = "❌ Невірний пароль! Спробуй ще.";
+                document.getElementById('error').innerText = "Невірний пароль!";
             }
         }
 
-        // Відображення прямого переходу на папку після введення пароля
-        function showFolder(category) {
-            const content = document.getElementById('modal-content');
-            const folder = database[category];
-            
-            content.innerHTML = `
-                <h2 style="margin-top:20px; color:#00f0ff;">📂 Ваша папка на Диску</h2>
-                <div class="file-list">
-                    <div class="file-item">
-                        <a href="${folder.link}" target="_blank">${folder.name} ↗</a>
-                    </div>
-                </div>
-                <p style="color: #bbc4d0; margin-top: 20px; font-size: 0.9rem;">Натисніть на посилання, щоб відкрити вміст папки в новій вкладці.</p>
-            `;
-        }
+        function openPublic() { window.open(database.public, '_blank'); }
 
-        // Вільна кнопка "Цікаве для всіх" без пароля
-        function openPublic() {
-            const modal = document.getElementById('modal-window');
-            const content = document.getElementById('modal-content');
-            const folder = database.public;
-            
-            modal.style.display = 'block';
-            content.innerHTML = `
-                <h2 style="margin-top:20px; color:#00f0ff;">✨ Цікаве для всіх!</h2>
-                <div class="file-list">
-                    <div class="file-item">
-                        <a href="${folder.link}" target="_blank">${folder.name} ↗</a>
-                    </div>
-                </div>
-                <p style="color: #bbc4d0; margin-top: 20px; font-size: 0.9rem;">Вільний доступ для всіх відвідувачів сайту.</p>
-            `;
-        }
-
-        function closeModal() {
-            document.getElementById('modal-window').style.display = 'none';
-        }
+        // Анімація
+        setInterval(() => {
+            document.querySelectorAll('.orb').forEach(o => {
+                o.style.left = (Math.random()*90)+'vw'; 
+                o.style.top = (Math.random()*90)+'vh';
+            });
+        }, 4000);
     </script>
 </body>
 </html>
