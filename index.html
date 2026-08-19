@@ -27,8 +27,9 @@
 
         #modal-window { display: none; position: fixed; top: 30%; left: 30%; width: 40%; background: rgba(10, 14, 23, 0.98); border: 2px solid #00f0ff; border-radius: 15px; z-index: 10; padding: 30px; color: white; text-align: center; box-shadow: 0 0 30px rgba(0, 240, 255, 0.5); }
         .close-btn { position: absolute; top: 10px; right: 15px; cursor: pointer; color: #ff4444; font-weight: bold; }
-        input[type="password"] { padding: 10px; width: 200px; border-radius: 5px; border: 1px solid #00f0ff; background: #03060f; color: white; text-align: center; }
-        .submit-btn { margin-top: 15px; padding: 10px 20px; background: #0088ff; color: white; border-radius: 8px; border: none; cursor: pointer; }
+        input[type="password"] { padding: 10px; width: 200px; border-radius: 5px; border: 1px solid #00f0ff; background: #03060f; color: white; text-align: center; font-size: 1rem; }
+        .submit-btn { margin-top: 15px; padding: 10px 20px; background: #0088ff; color: white; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; }
+        .submit-btn:hover { background: #00f0ff; color: #03060f; }
     </style>
 </head>
 <body>
@@ -59,15 +60,21 @@
         };
 
         function requestPassword(category) {
-            document.getElementById('modal-window').style.display = 'block';
+            const modal = document.getElementById('modal-window');
+            modal.style.display = 'block';
             document.getElementById('modal-content').innerHTML = `
                 <h3>🔒 Введіть пароль</h3>
                 <input type="password" id="passInput" placeholder="Пароль">
                 <br><button class="submit-btn" onclick="check('${category}')">Увійти</button>
                 <p id="error" style="color:red; margin-top:10px;"></p>
             `;
-            // Додаємо можливість натиснути Enter для входу
-            document.getElementById('passInput').onkeydown = function(e) {
+            
+            // АВТОФОКУС: курсор одразу стає в поле введення пароля!
+            const inputField = document.getElementById('passInput');
+            inputField.focus();
+
+            // Натискання Enter для підтвердження
+            inputField.onkeydown = function(e) {
                 if(e.key === 'Enter') check(category);
             };
         }
