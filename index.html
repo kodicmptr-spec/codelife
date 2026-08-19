@@ -2,7 +2,7 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <title>Мій CodeLife - Хмарний Архів</title>
+    <title>Мій CodeLife - Захищений Робочий Стіл</title>
     <style>
         body {
             background-color: #03060f;
@@ -80,55 +80,55 @@
     <main class="cards-grid">
         <div class="card" onclick="requestPassword('books')">
             <h2>📚 Мої Книги</h2>
-            <p>Формати PDF, TXT, DOCX (Тільки для друзів)</p>
+            <p>Текстові файли, txt, docx, pdf (Тільки для друзів)</p>
         </div>
 
         <div class="card" onclick="requestPassword('media')">
             <h2>🎬 Медіафайли</h2>
-            <p>Відео та аудіо формати (Секретно)</p>
+            <p>Відео та аудіо (Секретно)</p>
         </div>
 
         <div class="card" onclick="requestPassword('software')">
             <h2>💻 Мої Софт & Коди</h2>
-            <p>Програми .exe та скрипти (Секретно)</p>
+            <p>Програми, скрипти, .exe (Секретно)</p>
         </div>
 
         <div class="card" onclick="requestPassword('photos')">
             <h2>📸 Мої Світлини</h2>
-            <p>Фотографії та картинки (Секретно)</p>
+            <p>Фотографії та картини (Секретно)</p>
         </div>
 
         <div class="card" onclick="openPublic()">
             <h2>✨ Цікаве для всіх!</h2>
-            <p>Відкритий доступ з Google Диска</p>
+            <p>Відкритий доступ для всіх</p>
         </div>
     </main>
 
     <script>
-        // Твій секретний пароль
+        // Твій секретний пароль для чотирьох перших розділів
         const SECRET_PASSWORD = "2026";
 
-        // ВСІ ФАЙЛИ ТІЛЬКИ З GOOGLE ДИСКА
+        // ТУТ ТИ МОЖЕШ ВПИСАТИ СВОЇ РЕАЛЬНІ ПОСИЛАННЯ НА ФАЙЛИ
         const database = {
             books: [
-                { name: "📖 Моя книга (PDF)", link: "ТУТ_ПОСИЛАННЯ_З_GOOGLE_ДИСКА" },
-                { name: "📝 Документ (DOCX / TXT)", link: "ТУТ_ПОСИЛАННЯ_З_GOOGLE_ДИСКА" }
+                { name: "📖 Моя книга №1.pdf", link: "СТАВ_СВОЄ_ПОСИЛАННЯ_ТУТ" },
+                { name: "📝 Документ заміток.docx", link: "СТАВ_СВОЄ_ПОСИЛАННЯ_ТУТ" }
             ],
             media: [
-                { name: "🎵 Аудіотрек (MP3)", link: "ТУТ_ПОСИЛАННЯ_З_GOOGLE_ДИСКА" },
-                { name: "🎬 Відеоролик (MP4)", link: "ТУТ_ПОСИЛАННЯ_З_GOOGLE_ДИСКА" }
+                { name: "🎵 Мій аудіотрек.mp3", link: "СТАВ_СВОЄ_ПОСИЛАННЯ_ТУТ" },
+                { name: "🎬 Моє секретне відео.mp4", link: "СТАВ_СВОЄ_ПОСИЛАННЯ_ТУТ" }
             ],
             software: [
-                { name: "💻 Програма (.exe)", link: "ТУТ_ПОСИЛАННЯ_З_GOOGLE_ДИСКА" },
-                { name: "⚙️ Скрипт / Код", link: "ТУТ_ПОСИЛАННЯ_З_GOOGLE_ДИСКА" }
+                { name: "💻 Моя програма.exe", link: "СТАВ_СВОЄ_ПОСИЛАННЯ_ТУТ" },
+                { name: "⚙️ Скрипт коду.py", link: "СТАВ_СВОЄ_ПОСИЛАННЯ_ТУТ" }
             ],
             photos: [
-                { name: "📸 Світлина (JPG / PNG)", link: "ТУТ_ПОСИЛАННЯ_З_GOOGLE_ДИСКА" },
-                { name: "🖼️ Картина", link: "ТУТ_ПОСИЛАННЯ_З_GOOGLE_ДИСКА" }
+                { name: "📸 Моє фото.jpg", link: "СТАВ_СВОЄ_ПОСИЛАННЯ_ТУТ" },
+                { name: "🖼️ Цифрова картина.png", link: "СТАВ_СВОЄ_ПОСИЛАННЯ_ТУТ" }
             ],
             public: [
-                { name: "✨ Публічний файл №1", link: "ТУТ_ПОСИЛАННЯ_З_GOOGLE_ДИСКА" },
-                { name: "🌍 Публічний файл №2", link: "ТУТ_ПОСИЛАННЯ_З_GOOGLE_ДИСКА" }
+                { name: "✨ Відкритий файл для всіх №1", link: "СТАВ_СВОЄ_ПОСИЛАННЯ_ТУТ" },
+                { name: "🌍 Публічна цікавинка", link: "СТАВ_СВОЄ_ПОСИЛАННЯ_ТУТ" }
             ]
         };
 
@@ -142,13 +142,14 @@
         setInterval(moveOrbs, 4000);
         moveOrbs();
 
+        // Запит пароля для секретних розділів
         function requestPassword(category) {
             const modal = document.getElementById('modal-window');
             const content = document.getElementById('modal-content');
             
             modal.style.display = 'block';
             content.innerHTML = `
-                <h2 style="margin-top:20px; color:#00f0ff;">🔒 Секретний розділ Google Диска</h2>
+                <h2 style="margin-top:20px; color:#00f0ff;">🔒 Секретний розділ</h2>
                 <p>Введіть пароль для доступу:</p>
                 <div class="password-box">
                     <input type="password" id="passInput" placeholder="Введіть пароль">
@@ -159,8 +160,9 @@
             `;
         }
 
+        // Перевірка пароля
         function checkPassword(category) {
-            const enteredPass = document.getElementById('passInput'].value;
+            const enteredPass = document.getElementById('passInput').value;
             if (enteredPass === SECRET_PASSWORD) {
                 showFiles(category);
             } else {
@@ -168,15 +170,16 @@
             }
         }
 
+        // Показ файлів після правильного пароля
         function showFiles(category) {
             const content = document.getElementById('modal-content');
-            let html = `<h2 style="margin-top:20px; color:#00f0ff;">📁 Файли з Google Диска</h2><div class="file-list">`;
+            let html = `<h2 style="margin-top:20px; color:#00f0ff;">📁 Захищений архів</h2><div class="file-list">`;
             
             database[category].forEach(file => {
                 html += `
                     <div class="file-item">
                         <span>📄 ${file.name}</span>
-                        <a href="${file.link}" target="_blank">📥 Відкрити / Завантажити</a>
+                        <a href="${file.link}" target="_blank">📥 Завантажити</a>
                     </div>
                 `;
             });
@@ -184,18 +187,19 @@
             content.innerHTML = html;
         }
 
+        // Відкриття публічного розділу (без пароля)
         function openPublic() {
             const modal = document.getElementById('modal-window');
             const content = document.getElementById('modal-content');
             
             modal.style.display = 'block';
-            let html = `<h2 style="margin-top:20px; color:#00f0ff;">✨ Цікаве для всіх!</h2><p>Відкритий доступ з Google Диска:</p><div class="file-list">`;
+            let html = `<h2 style="margin-top:20px; color:#00f0ff;">✨ Цікаве для всіх!</h2><p>Доступно кожному:</p><div class="file-list">`;
             
             database.public.forEach(file => {
                 html += `
                     <div class="file-item">
                         <span>🌟 ${file.name}</span>
-                        <a href="${file.link}" target="_blank">🔗 Відкрити файл</a>
+                        <a href="${file.link}" target="_blank">🔗 Відкрити</a>
                     </div>
                 `;
             });
