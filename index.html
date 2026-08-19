@@ -2,7 +2,7 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <title>Мій CodeLife - Професійний Робочий Стіл</title>
+    <title>Мій CodeLife - Закрита База</title>
     <style>
         body {
             background-color: #03060f;
@@ -27,7 +27,7 @@
                border-radius: 50%; z-index: 0; filter: blur(3px);
                transition: all 5s linear; pointer-events: none; }
 
-        /* Сітка файлів на робочому столі */
+        /* Сітка карток */
         .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
                       gap: 20px; width: 90%; max-width: 1000px; margin-top: 50px; 
                       z-index: 2; position: relative; }
@@ -45,57 +45,93 @@
         h2 { font-size: 1.1rem; margin: 10px 0; color: white; }
         p { font-size: 0.9rem; color: #bbc4d0; }
 
-        /* Віконна система (Модальне вікно) */
+        /* Модальне вікно */
         #modal-window { 
-            display: none; position: fixed; top: 15%; left: 20%; width: 60%; height: 60%; 
-            background: rgba(10, 14, 23, 0.95); border: 2px solid #00f0ff; border-radius: 15px; 
+            display: none; position: fixed; top: 15%; left: 20%; width: 60%; height: 65%; 
+            background: rgba(10, 14, 23, 0.98); border: 2px solid #00f0ff; border-radius: 15px; 
             z-index: 10; padding: 30px; color: white; text-align: center; box-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
+            overflow-y: auto;
         }
         .close-btn { position: absolute; top: 15px; right: 20px; cursor: pointer; color: #ff4444; font-weight: bold; font-size: 18px; }
-        .action-btn { display: inline-block; margin-top: 20px; padding: 12px 25px; background: #0088ff; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; transition: 0.3s; }
-        .action-btn:hover { background: #00f0ff; color: #03060f; box-shadow: 0 0 15px #00f0ff; }
+        
+        /* Поля вводу та кнопки */
+        .password-box { margin-top: 40px; }
+        input[type="password"] { padding: 10px; width: 200px; border-radius: 5px; border: 1px solid #00f0ff; background: #03060f; color: white; text-align: center; font-size: 1rem; }
+        .submit-btn, .action-btn { display: inline-block; margin-top: 15px; padding: 10px 20px; background: #0088ff; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; border: none; cursor: pointer; transition: 0.3s; }
+        .submit-btn:hover, .action-btn:hover { background: #00f0ff; color: #03060f; box-shadow: 0 0 15px #00f0ff; }
+        
+        .file-list { margin-top: 20px; text-align: left; display: inline-block; }
+        .file-item { margin: 10px 0; background: rgba(0, 240, 255, 0.1); padding: 10px 15px; border-radius: 8px; border: 1px solid rgba(0, 240, 255, 0.3); }
+        .file-item a { color: #00f0ff; text-decoration: none; font-weight: bold; }
+        .file-item a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
     <div class="planet p1"></div><div class="planet p2"></div><div class="planet p3"></div>
     <div class="orb" id="o1"></div><div class="orb" id="o2"></div><div class="orb" id="o3"></div>
 
-    <!-- Модальне вікно для відкриття файлів -->
+    <!-- Універсальне модальне вікно -->
     <div id="modal-window">
         <span class="close-btn" onclick="closeModal()">[X] ЗАКРИТИ</span>
-        <h2 id="modal-title" style="font-size: 1.5rem; margin-top: 20px;">Назва файлу</h2>
-        <p id="modal-desc" style="margin: 15px 0;">Опис файлу або інструкція для друга.</p>
-        <a id="modal-link" href="#" target="_blank" class="action-btn">📥 Відкрити / Завантажити файл</a>
+        <div id="modal-content"></div>
     </div>
 
-    <!-- Робочий стіл з іконками -->
+    <!-- Робочий стіл з кнопками -->
     <main class="cards-grid">
-        <div class="card" onclick="openFile('📚 Книги та Статті', 'Збірник моїх літературних праць та статей.', 'https://drive.google.com/')">
+        <div class="card" onclick="requestPassword('books')">
             <h2>📚 Мої Книги</h2>
-            <p>Документи та матеріали.</p>
+            <p>Текстові файли (Тільки для друзів)</p>
         </div>
 
-        <div class="card" onclick="openFile('🎬 Медіафайли та Відео', 'Відеоролики та огляди мого софту.', 'https://www.youtube.com/')">
+        <div class="card" onclick="requestPassword('media')">
             <h2>🎬 Медіафайли</h2>
-            <p>Відео та демонстрації.</p>
+            <p>Відео та аудіо (Секретно)</p>
         </div>
 
-        <div class="card" onclick="openFile('💻 Софт & Програми (.exe)', 'Інсталяційні файли моїх програм для завантаження.', 'https://drive.google.com/')">
-            <h2>💻 Мої Софт & Коди</h2><p>Програми та скрипти.</p>
+        <div class="card" onclick="requestPassword('software')">
+            <h2>💻 Мої Софт & Коди</h2>
+            <p>Програми та скрипти (.exe, код)</p>
         </div>
 
-        <div class="card" onclick="openFile('📸 Світлини та Арти', 'Галерея цифрові картини та фото.', 'https://photos.google.com/')">
+        <div class="card" onclick="requestPassword('photos')">
             <h2>📸 Мої Світлини</h2>
-            <p>Цифрові галереї.</p>
+            <p>Фотографії та картини</p>
         </div>
 
-        <div class="card" onclick="openFile('✨ Цікаве для всіх!', 'Корисні інструменти та посилання.', 'https://github.com/')">
+        <div class="card" onclick="openPublic()">
             <h2>✨ Цікаве для всіх!</h2>
-            <p>Добірки та ідеї.</p>
+            <p>Відкритий доступ для всіх</p>
         </div>
     </main>
 
     <script>
+        // Секретний пароль (можеш змінити на будь-який)
+        const SECRET_PASSWORD = "11111968";
+
+        // База даних твоїх секретних та публічних файлів (заміниш посилання на свої)
+        const database = {
+            books: [
+                { name: "📖 Моя книга (PDF)", link: "https://drive.google.com/" },
+                { name: "📝 Стаття про код (.docx)", link: "https://drive.google.com/" }
+            ],
+            media: [
+                { name: "🎵 Ексклюзивний трек (Audio)", link: "https://drive.google.com/" },
+                { name: "🎬 Закритий відеоролик (MP4)", link: "https://www.youtube.com/" }
+            ],
+            software: [
+                { name: "💻 Моя програма (.exe)", link: "https://drive.google.com/" },
+                { name: "⚙️ Скрипт автоматизації (Python)", link: "https://github.com/" }
+            ],
+            photos: [
+                { name: "📸 Цифровий арт №1 (JPG)", link: "https://photos.google.com/" },
+                { name: "🌄 Робочий стіл космос (PNG)", link: "https://photos.google.com/" }
+            ],
+            public: [
+                { name: "✨ Публічна цікавинка 1", link: "https://github.com/" },
+                { name: "🌍 Відкритий файл для всіх", link: "https://google.com/" }
+            ]
+        };
+
         // Анімація кульок
         function moveOrbs() {
             document.querySelectorAll('.orb').forEach(orb => {
@@ -106,12 +142,69 @@
         setInterval(moveOrbs, 4000);
         moveOrbs();
 
-        // Логіка відкриття вікна файлу
-        function openFile(title, desc, link) {
-            document.getElementById('modal-title').innerText = title;
-            document.getElementById('modal-desc').innerText = desc;
-            document.getElementById('modal-link').href = link;
-            document.getElementById('modal-window').style.display = 'block';
+        // Запит пароля для секретних розділів
+        function requestPassword(category) {
+            const modal = document.getElementById('modal-window');
+            const content = document.getElementById('modal-content');
+            
+            modal.style.display = 'block';
+            content.innerHTML = `
+                <h2 style="margin-top:20px; color:#00f0ff;">🔒 Секретний розділ</h2>
+                <p>Цей розділ тільки для друзів. Введіть пароль:</p>
+                <div class="password-box">
+                    <input type="password" id="passInput" placeholder="Пароль">
+                    <br>
+                    <button class="submit-btn" onclick="checkPassword('${category}')">Увійти</button>
+                </div>
+                <p id="errorMsg" style="color:#ff4444; margin-top:10px;"></p>
+            `;
+        }
+
+        // Перевірка пароля
+        function checkPassword(category) {
+            const enteredPass = document.getElementById('passInput').value;
+            if (enteredPass === SECRET_PASSWORD) {
+                showFiles(category);
+            } else {
+                document.getElementById('errorMsg').innerText = "Невірний пароль! Спробуй ще.";
+            }
+        }
+
+        // Відображення файлів після успішного вводу пароля
+        function showFiles(category) {
+            const content = document.getElementById('modal-content');
+            let html = `<h2 style="margin-top:20px; color:#00f0ff;">📁 Архів файлів</h2><div class="file-list">`;
+            
+            database[category].forEach(file => {
+                html += `
+                    <div class="file-item">
+                        📄 <strong>${file.name}</strong><br>
+                        <a href="${file.link}" target="_blank">📥 Завантажити / Переглянути</a>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+            content.innerHTML = html;
+        }
+
+        // Відкриття публічного розділу (без пароля)
+        function openPublic() {
+            const modal = document.getElementById('modal-window');
+            const content = document.getElementById('modal-content');
+            
+            modal.style.display = 'block';
+            let html = `<h2 style="margin-top:20px; color:#00f0ff;">✨ Цікаве для всіх!</h2><p>Відкритий доступ для кожного:</p><div class="file-list">`;
+            
+            database.public.forEach(file => {
+                html += `
+                    <div class="file-item">
+                        🌟 <strong>${file.name}</strong><br>
+                        <a href="${file.link}" target="_blank">🔗 Відкрити посилання</a>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+            content.innerHTML = html;
         }
 
         function closeModal() {
