@@ -69,6 +69,17 @@
                 <p id="error" style="color:red; margin-top:10px;"></p>
             `;
             
+            // Додаємо затримку 100мс, щоб браузер гарантовано встиг показати вікно перед фокусом
+            setTimeout(() => {
+                const inputField = document.getElementById('passInput');
+                inputField.focus();
+                
+                inputField.onkeydown = function(e) {
+                    if(e.key === 'Enter') check(category);
+                };
+            }, 100);
+        }
+            
             // АВТОФОКУС: курсор одразу стає в поле введення пароля!
             const inputField = document.getElementById('passInput');
             inputField.focus();
