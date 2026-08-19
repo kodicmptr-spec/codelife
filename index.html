@@ -61,9 +61,9 @@
         .submit-btn:hover { background: #00f0ff; color: #03060f; box-shadow: 0 0 15px #00f0ff; }
         
         .file-list { margin-top: 20px; text-align: left; display: inline-block; width: 85%; }
-        .file-item { margin: 10px 0; background: rgba(0, 240, 255, 0.1); padding: 12px 15px; border-radius: 8px; border: 1px solid rgba(0, 240, 255, 0.3); }
-        .file-item a { color: #00f0ff; text-decoration: none; font-weight: bold; float: right; }
-        .file-item a:hover { text-decoration: underline; }
+        .file-item { margin: 10px 0; background: rgba(0, 240, 255, 0.1); padding: 15px 20px; border-radius: 8px; border: 1px solid rgba(0, 240, 255, 0.3); text-align: center; }
+        .file-item a { color: #00f0ff; text-decoration: none; font-weight: bold; font-size: 1.1rem; }
+        .file-item a:hover { text-decoration: underline; text-shadow: 0 0 10px #00f0ff; }
     </style>
 </head>
 <body>
@@ -90,12 +90,12 @@
 
         <div class="card" onclick="requestPassword('software')">
             <h2>💻 Мої Софт & Коди</h2>
-            <p>EXE, ASM, C, C++, Java, JS, PY та ін. (З паролем)</p>
+            <p>EXE, ASM, C, C++, JS, PY та ін. (З паролем)</p>
         </div>
 
         <div class="card" onclick="requestPassword('photos')">
             <h2>📸 Мої Світлини</h2>
-            <p>Тільки фото та картинки: JPG, PNG, WEBP (З паролем)</p>
+            <p>Тільки фото та картинки (З паролем)</p>
         </div>
 
         <div class="card" onclick="openPublic()">
@@ -108,31 +108,13 @@
         // Твій персональний секретний пароль
         const SECRET_PASSWORD = "11111968";
 
-        // БАЗА ДАНИХ ФОРМАТІВ НА СЬОГОДНІ ТА НА МАЙБУТНЄ
+        // ПОСИЛАННЯ НА ТВОЇ ПАПКИ З GOOGLE ДИСКА
         const database = {
-            books: [
-                { name: "📖 Книга або документ (.pdf / .docx)", link: "ПОСИЛАННЯ_НА_ФАЙЛ_З_ДИСКА" }
-            ],
-            media: [
-                { name: "🎵 Аудіотрек (.mp3)", link: "ПОСИЛАННЯ_НА_ФАЙЛ_З_ДИСКА" },
-                { name: "🎬 Відеоролик (.mp4)", link: "ПОСИЛАННЯ_НА_ФАЙЛ_З_ДИСКА" }
-            ],
-            software: [
-                { name: "💻 Програма інсталятор (.exe)", link: "ПОСИЛАННЯ_НА_ФАЙЛ_З_ДИСКА" },
-                { name: "⚙️ Асемблер код (.asm)", link: "ПОСИЛАННЯ_НА_ФАЙЛ_З_ДИСКА" },
-                { name: "🔵 Мова Си (.c / .h)", link: "ПОСИЛАННЯ_НА_ФАЙЛ_З_ДИСКА" },
-                { name: "🟢 Си++ (.cpp / .hpp)", link: "ПОСИЛАННЯ_НА_ФАЙЛ_З_ДИСКА" },
-                { name: "☕ Java код (.java)", link: "ПОСИЛАННЯ_НА_ФАЙЛ_З_ДИСКА" },
-                { name: "🌐 JavaScript скрипт (.js)", link: "ПОСИЛАННЯ_НА_ФАЙЛ_З_ДИСКА" },
-                { name: "🐍 Python скрипт (.py)", link: "ПОСИЛАННЯ_НА_ФАЙЛ_З_ДИСКА" }
-            ],
-            photos: [
-                { name: "📸 Моє фото / Світлина (.jpg)", link: "ПОСИЛАННЯ_НА_ФАЙЛ_З_ДИСКА" },
-                { name: "🖼️ Цифрова картина (.png / .webp)", link: "ПОСИЛАННЯ_НА_ФАЙЛ_З_ДИСКА" }
-            ],
-            public: [
-                { name: "✨ Відкритий файл для всіх", link: "ПОСИЛАННЯ_НА_ФАЙЛ_З_ДИСКА" }
-            ]
+            books: { name: "📁 Відкрити папку 'Мої книги!'", link: "https://drive.google.com/drive/folders/1CfXdTjx0Ib7ST21TBDy1Hg2-QdcvzFMO?usp=drive_link" },
+            media: { name: "📁 Відкрити папку 'Медіафайли!'", link: "https://drive.google.com/drive/folders/15HgC3XhSLDvjo2pQLROdoFJLj0tpfcGb?usp=drive_link" },
+            software: { name: "📁 Відкрити папку 'Мої софт & коди!'", link: "https://drive.google.com/drive/folders/18lHjjyJfPgzTG5XYSVPAyKmAlX-RU5Ii?usp=drive_link" },
+            photos: { name: "📁 Відкрити папку 'Мої світлини!'", link: "https://drive.google.com/drive/folders/10fMK4fULL_EBsKMxKajMf29YheouXoKh?usp=drive_link" },
+            public: { name: "✨ Відкрити папку 'Цікаве для всіх!'", link: "https://drive.google.com/drive/folders/1LPZOGhXmUkf0KjLIBKTXm_TwQxKgDGuv?usp=drive_link" }
         };
 
         // Анімація фонових кульок
@@ -145,7 +127,7 @@
         setInterval(moveOrbs, 4000);
         moveOrbs();
 
-        // Запит пароля (11111968) для захищених кнопок
+        // Запит пароля для 4 захищених кнопок
         function requestPassword(category) {
             const modal = document.getElementById('modal-window');
             const content = document.getElementById('modal-content');
@@ -166,47 +148,44 @@
         function checkPassword(category) {
             const enteredPass = document.getElementById('passInput').value;
             if (enteredPass === SECRET_PASSWORD) {
-                showFiles(category);
+                showFolder(category);
             } else {
                 document.getElementById('errorMsg').innerText = "❌ Невірний пароль! Спробуй ще.";
             }
         }
 
-        // Виведення списку відповідно до категорії
-        function showFiles(category) {
+        // Відображення прямого переходу на папку після введення пароля
+        function showFolder(category) {
             const content = document.getElementById('modal-content');
-            let html = `<h2 style="margin-top:20px; color:#00f0ff;">📁 Архів форматів</h2><div class="file-list">`;
+            const folder = database[category];
             
-            database[category].forEach(file => {
-                html += `
+            content.innerHTML = `
+                <h2 style="margin-top:20px; color:#00f0ff;">📂 Ваша папка на Диску</h2>
+                <div class="file-list">
                     <div class="file-item">
-                        <span>📄 ${file.name}</span>
-                        <a href="${file.link}" target="_blank">📥 Відкрити / Завантажити</a>
+                        <a href="${folder.link}" target="_blank">${folder.name} ↗</a>
                     </div>
-                `;
-            });
-            html += `</div>`;
-            content.innerHTML = html;
+                </div>
+                <p style="color: #bbc4d0; margin-top: 20px; font-size: 0.9rem;">Натисніть на посилання, щоб відкрити вміст папки в новій вкладці.</p>
+            `;
         }
 
-        // Вільна кнопка без пароля для всіх
+        // Вільна кнопка "Цікаве для всіх" без пароля
         function openPublic() {
             const modal = document.getElementById('modal-window');
             const content = document.getElementById('modal-content');
+            const folder = database.public;
             
             modal.style.display = 'block';
-            let html = `<h2 style="margin-top:20px; color:#00f0ff;">✨ Цікаве для всіх!</h2><p>Вільний доступ:</p><div class="file-list">`;
-            
-            database.public.forEach(file => {
-                html += `
+            content.innerHTML = `
+                <h2 style="margin-top:20px; color:#00f0ff;">✨ Цікаве для всіх!</h2>
+                <div class="file-list">
                     <div class="file-item">
-                        <span>🌟 ${file.name}</span>
-                        <a href="${file.link}" target="_blank">🔗 Відкрити</a>
+                        <a href="${folder.link}" target="_blank">${folder.name} ↗</a>
                     </div>
-                `;
-            });
-            html += `</div>`;
-            content.innerHTML = html;
+                </div>
+                <p style="color: #bbc4d0; margin-top: 20px; font-size: 0.9rem;">Вільний доступ для всіх відвідувачів сайту.</p>
+            `;
         }
 
         function closeModal() {
