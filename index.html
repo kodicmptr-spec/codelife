@@ -2,7 +2,7 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <title>Мій CodeLife - Закрита База</title>
+    <title>Мій CodeLife - Захищений Робочий Стіл</title>
     <style>
         body {
             background-color: #03060f;
@@ -55,14 +55,14 @@
         .close-btn { position: absolute; top: 15px; right: 20px; cursor: pointer; color: #ff4444; font-weight: bold; font-size: 18px; }
         
         /* Поля вводу та кнопки */
-        .password-box { margin-top: 40px; }
-        input[type="password"] { padding: 10px; width: 200px; border-radius: 5px; border: 1px solid #00f0ff; background: #03060f; color: white; text-align: center; font-size: 1rem; }
+        .password-box { margin-top: 30px; }
+        input[type="password"] { padding: 10px; width: 220px; border-radius: 5px; border: 1px solid #00f0ff; background: #03060f; color: white; text-align: center; font-size: 1rem; }
         .submit-btn, .action-btn { display: inline-block; margin-top: 15px; padding: 10px 20px; background: #0088ff; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; border: none; cursor: pointer; transition: 0.3s; }
         .submit-btn:hover, .action-btn:hover { background: #00f0ff; color: #03060f; box-shadow: 0 0 15px #00f0ff; }
         
-        .file-list { margin-top: 20px; text-align: left; display: inline-block; }
-        .file-item { margin: 10px 0; background: rgba(0, 240, 255, 0.1); padding: 10px 15px; border-radius: 8px; border: 1px solid rgba(0, 240, 255, 0.3); }
-        .file-item a { color: #00f0ff; text-decoration: none; font-weight: bold; }
+        .file-list { margin-top: 20px; text-align: left; display: inline-block; width: 80%; }
+        .file-item { margin: 10px 0; background: rgba(0, 240, 255, 0.1); padding: 12px 15px; border-radius: 8px; border: 1px solid rgba(0, 240, 255, 0.3); }
+        .file-item a { color: #00f0ff; text-decoration: none; font-weight: bold; float: right; }
         .file-item a:hover { text-decoration: underline; }
     </style>
 </head>
@@ -70,7 +70,7 @@
     <div class="planet p1"></div><div class="planet p2"></div><div class="planet p3"></div>
     <div class="orb" id="o1"></div><div class="orb" id="o2"></div><div class="orb" id="o3"></div>
 
-    <!-- Універсальне модальне вікно -->
+    <!-- Модальне вікно -->
     <div id="modal-window">
         <span class="close-btn" onclick="closeModal()">[X] ЗАКРИТИ</span>
         <div id="modal-content"></div>
@@ -80,7 +80,7 @@
     <main class="cards-grid">
         <div class="card" onclick="requestPassword('books')">
             <h2>📚 Мої Книги</h2>
-            <p>Текстові файли (Тільки для друзів)</p>
+            <p>Текстові файли, txt, docx, pdf (Тільки для друзів)</p>
         </div>
 
         <div class="card" onclick="requestPassword('media')">
@@ -90,12 +90,12 @@
 
         <div class="card" onclick="requestPassword('software')">
             <h2>💻 Мої Софт & Коди</h2>
-            <p>Програми та скрипти (.exe, код)</p>
+            <p>Програми, скрипти, .exe (Секретно)</p>
         </div>
 
         <div class="card" onclick="requestPassword('photos')">
             <h2>📸 Мої Світлини</h2>
-            <p>Фотографії та картини</p>
+            <p>Фотографії та картини (Секретно)</p>
         </div>
 
         <div class="card" onclick="openPublic()">
@@ -105,30 +105,30 @@
     </main>
 
     <script>
-        // Секретний пароль (можеш змінити на будь-який)
+        // Твій секретний пароль для чотирьох перших розділів
         const SECRET_PASSWORD = "11111968";
 
-        // База даних твоїх секретних та публічних файлів (заміниш посилання на свої)
+        // ТУТ ТИ МОЖЕШ ВПИСАТИ СВОЇ РЕАЛЬНІ ПОСИЛАННЯ НА ФАЙЛИ
         const database = {
             books: [
-                { name: "📖 Моя книга (PDF)", link: "https://drive.google.com/" },
-                { name: "📝 Стаття про код (.docx)", link: "https://drive.google.com/" }
+                { name: "📖 Моя книга №1.pdf", link: "СТАВ_СВОЄ_ПОСИЛАННЯ_ТУТ" },
+                { name: "📝 Документ заміток.docx", link: "СТАВ_СВОЄ_ПОСИЛАННЯ_ТУТ" }
             ],
             media: [
-                { name: "🎵 Ексклюзивний трек (Audio)", link: "https://drive.google.com/" },
-                { name: "🎬 Закритий відеоролик (MP4)", link: "https://www.youtube.com/" }
+                { name: "🎵 Мій аудіотрек.mp3", link: "СТАВ_СВОЄ_ПОСИЛАННЯ_ТУТ" },
+                { name: "🎬 Моє секретне відео.mp4", link: "СТАВ_СВОЄ_ПОСИЛАННЯ_ТУТ" }
             ],
             software: [
-                { name: "💻 Моя програма (.exe)", link: "https://drive.google.com/" },
-                { name: "⚙️ Скрипт автоматизації (Python)", link: "https://github.com/" }
+                { name: "💻 Моя програма.exe", link: "СТАВ_СВОЄ_ПОСИЛАННЯ_ТУТ" },
+                { name: "⚙️ Скрипт коду.py", link: "СТАВ_СВОЄ_ПОСИЛАННЯ_ТУТ" }
             ],
             photos: [
-                { name: "📸 Цифровий арт №1 (JPG)", link: "https://photos.google.com/" },
-                { name: "🌄 Робочий стіл космос (PNG)", link: "https://photos.google.com/" }
+                { name: "📸 Моє фото.jpg", link: "СТАВ_СВОЄ_ПОСИЛАННЯ_ТУТ" },
+                { name: "🖼️ Цифрова картина.png", link: "СТАВ_СВОЄ_ПОСИЛАННЯ_ТУТ" }
             ],
             public: [
-                { name: "✨ Публічна цікавинка 1", link: "https://github.com/" },
-                { name: "🌍 Відкритий файл для всіх", link: "https://google.com/" }
+                { name: "✨ Відкритий файл для всіх №1", link: "СТАВ_СВОЄ_ПОСИЛАННЯ_ТУТ" },
+                { name: "🌍 Публічна цікавинка", link: "СТАВ_СВОЄ_ПОСИЛАННЯ_ТУТ" }
             ]
         };
 
@@ -150,13 +150,13 @@
             modal.style.display = 'block';
             content.innerHTML = `
                 <h2 style="margin-top:20px; color:#00f0ff;">🔒 Секретний розділ</h2>
-                <p>Цей розділ тільки для друзів. Введіть пароль:</p>
+                <p>Введіть пароль для доступу:</p>
                 <div class="password-box">
-                    <input type="password" id="passInput" placeholder="Пароль">
+                    <input type="password" id="passInput" placeholder="Введіть пароль">
                     <br>
                     <button class="submit-btn" onclick="checkPassword('${category}')">Увійти</button>
                 </div>
-                <p id="errorMsg" style="color:#ff4444; margin-top:10px;"></p>
+                <p id="errorMsg" style="color:#ff4444; margin-top:15px; font-weight:bold;"></p>
             `;
         }
 
@@ -166,20 +166,20 @@
             if (enteredPass === SECRET_PASSWORD) {
                 showFiles(category);
             } else {
-                document.getElementById('errorMsg').innerText = "Невірний пароль! Спробуй ще.";
+                document.getElementById('errorMsg').innerText = "❌ Невірний пароль! Спробуй ще.";
             }
         }
 
-        // Відображення файлів після успішного вводу пароля
+        // Показ файлів після правильного пароля
         function showFiles(category) {
             const content = document.getElementById('modal-content');
-            let html = `<h2 style="margin-top:20px; color:#00f0ff;">📁 Архів файлів</h2><div class="file-list">`;
+            let html = `<h2 style="margin-top:20px; color:#00f0ff;">📁 Захищений архів</h2><div class="file-list">`;
             
             database[category].forEach(file => {
                 html += `
                     <div class="file-item">
-                        📄 <strong>${file.name}</strong><br>
-                        <a href="${file.link}" target="_blank">📥 Завантажити / Переглянути</a>
+                        <span>📄 ${file.name}</span>
+                        <a href="${file.link}" target="_blank">📥 Завантажити</a>
                     </div>
                 `;
             });
@@ -193,13 +193,13 @@
             const content = document.getElementById('modal-content');
             
             modal.style.display = 'block';
-            let html = `<h2 style="margin-top:20px; color:#00f0ff;">✨ Цікаве для всіх!</h2><p>Відкритий доступ для кожного:</p><div class="file-list">`;
+            let html = `<h2 style="margin-top:20px; color:#00f0ff;">✨ Цікаве для всіх!</h2><p>Доступно кожному:</p><div class="file-list">`;
             
             database.public.forEach(file => {
                 html += `
                     <div class="file-item">
-                        🌟 <strong>${file.name}</strong><br>
-                        <a href="${file.link}" target="_blank">🔗 Відкрити посилання</a>
+                        <span>🌟 ${file.name}</span>
+                        <a href="${file.link}" target="_blank">🔗 Відкрити</a>
                     </div>
                 `;
             });
