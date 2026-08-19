@@ -62,14 +62,19 @@
             document.getElementById('modal-window').style.display = 'block';
             document.getElementById('modal-content').innerHTML = `
                 <h3>🔒 Введіть пароль</h3>
-                <input type="password" id="passInput" onkeypress="if(event.key==='Enter') check('${category}')">
+                <input type="password" id="passInput" placeholder="Пароль">
                 <br><button class="submit-btn" onclick="check('${category}')">Увійти</button>
-                <p id="error" style="color:red;"></p>
+                <p id="error" style="color:red; margin-top:10px;"></p>
             `;
+            // Додаємо можливість натиснути Enter для входу
+            document.getElementById('passInput').onkeydown = function(e) {
+                if(e.key === 'Enter') check(category);
+            };
         }
 
         function check(category) {
-            if(document.getElementById('passInput').value === SECRET_PASSWORD) {
+            const pass = document.getElementById('passInput').value;
+            if(pass === SECRET_PASSWORD) {
                 window.open(database[category], '_blank');
                 document.getElementById('modal-window').style.display = 'none';
             } else {
@@ -77,9 +82,11 @@
             }
         }
 
-        function openPublic() { window.open(database.public, '_blank'); }
+        function openPublic() { 
+            window.open(database.public, '_blank'); 
+        }
 
-        // Анімація
+        // Анімація кульок
         setInterval(() => {
             document.querySelectorAll('.orb').forEach(o => {
                 o.style.left = (Math.random()*90)+'vw'; 
