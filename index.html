@@ -69,15 +69,13 @@
                 <p id="error" style="color:red; margin-top:10px;"></p>
             `;
             
-            setTimeout(() => {
-                const inputField = document.getElementById('passInput');
-                if (inputField) {
-                    inputField.focus();
-                    inputField.onkeydown = function(e) {
-                        if (e.key === 'Enter') check(category);
-                    };
-                }
-            }, 50);
+            // Простий і надійний фокус без таймерів, які могли викликати збій
+            const inputField = document.getElementById('passInput');
+            inputField.focus();
+            
+            inputField.onkeydown = function(e) {
+                if (e.key === 'Enter') check(category);
+            };
         }
 
         function check(category) {
@@ -95,12 +93,14 @@
         }
 
         // Анімація кульок
-        setInterval(() => {
+        function moveOrbs() {
             document.querySelectorAll('.orb').forEach(o => {
                 o.style.left = (Math.random() * 90) + 'vw'; 
                 o.style.top = (Math.random() * 90) + 'vh';
             });
-        }, 4000);
+        }
+        setInterval(moveOrbs, 4000);
+        moveOrbs();
     </script>
 </body>
 </html>
