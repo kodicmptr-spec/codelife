@@ -64,33 +64,25 @@
             modal.style.display = 'block';
             document.getElementById('modal-content').innerHTML = `
                 <h3>🔒 Введіть пароль</h3>
-                <input type="password" id="passInput" placeholder="Пароль" autofocus>
+                <input type="password" id="passInput" placeholder="Пароль">
                 <br><button class="submit-btn" onclick="check('${category}')">Увійти</button>
                 <p id="error" style="color:red; margin-top:10px;"></p>
             `;
             
-            // Дублюємо фокус та обробку клавіші Enter
-            const inputField = document.getElementById('passInput');
-            inputField.focus();
-            
-            inputField.onkeydown = function(e) {
-                if(e.key === 'Enter') check(category);
-            };
-        }
-            
-            // АВТОФОКУС: курсор одразу стає в поле введення пароля!
-            const inputField = document.getElementById('passInput');
-            inputField.focus();
-
-            // Натискання Enter для підтвердження
-            inputField.onkeydown = function(e) {
-                if(e.key === 'Enter') check(category);
-            };
+            setTimeout(() => {
+                const inputField = document.getElementById('passInput');
+                if (inputField) {
+                    inputField.focus();
+                    inputField.onkeydown = function(e) {
+                        if (e.key === 'Enter') check(category);
+                    };
+                }
+            }, 50);
         }
 
         function check(category) {
             const pass = document.getElementById('passInput').value;
-            if(pass === SECRET_PASSWORD) {
+            if (pass === SECRET_PASSWORD) {
                 window.open(database[category], '_blank');
                 document.getElementById('modal-window').style.display = 'none';
             } else {
@@ -105,8 +97,8 @@
         // Анімація кульок
         setInterval(() => {
             document.querySelectorAll('.orb').forEach(o => {
-                o.style.left = (Math.random()*90)+'vw'; 
-                o.style.top = (Math.random()*90)+'vh';
+                o.style.left = (Math.random() * 90) + 'vw'; 
+                o.style.top = (Math.random() * 90) + 'vh';
             });
         }, 4000);
     </script>
